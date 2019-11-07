@@ -1,0 +1,1814 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+    
+    
+      
+        <title>线段树 - My Template</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.30686662.css">
+      
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../.." title="My Template" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              My Template
+            </span>
+            <span class="md-header-nav__topic">
+              
+                线段树
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/todest/template.git/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../.." title="My Template" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    My Template
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/todest/template.git/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Welcome to MkDocs" class="md-nav__link">
+      Welcome to MkDocs
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../about/" title="Precor ut tribus tanta" class="md-nav__link">
+      Precor ut tribus tanta
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Pb ds
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Pb ds
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../pb_ds/平衡树/" title="普通平衡树" class="md-nav__link">
+      普通平衡树
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      其他技巧
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        其他技巧
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1">
+    
+    <label class="md-nav__link" for="nav-4-1">
+      博弈论
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        博弈论
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../其他技巧/博弈论/博弈游戏/" title="Nim游戏" class="md-nav__link">
+      Nim游戏
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      高精度
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        高精度
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../其他技巧/高精度/乘法/" title="乘法" class="md-nav__link">
+      乘法
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../其他技巧/高精度/阶乘/" title="阶乘" class="md-nav__link">
+      阶乘
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      动态规划
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        动态规划
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../动态规划/动态规划初步/" title="动态规划初步" class="md-nav__link">
+      动态规划初步
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2">
+    
+    <label class="md-nav__link" for="nav-5-2">
+      背包
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        背包
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../动态规划/背包/01背包/" title="01背包" class="md-nav__link">
+      01背包
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      图论
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        图论
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-1" type="checkbox" id="nav-6-1">
+    
+    <label class="md-nav__link" for="nav-6-1">
+      生成树
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-6-1">
+        生成树
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../图论/生成树/Dijkstra/" title="Dijkstra" class="md-nav__link">
+      Dijkstra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../图论/生成树/Kruskal/" title="Kruskal" class="md-nav__link">
+      Kruskal
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../图论/生成树/Prim/" title="Prim" class="md-nav__link">
+      Prim
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      基础算法
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        基础算法
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../基础算法/递推/" title="递推" class="md-nav__link">
+      递推
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      字符串
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        字符串
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../字符串/KMP/" title="KMP" class="md-nav__link">
+      KMP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      排序
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        排序
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../排序/归并排序/" title="归并排序" class="md-nav__link">
+      归并排序
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../排序/快速排序/" title="快速排序" class="md-nav__link">
+      快速排序
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      搜索
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        搜索
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../搜索/广度优先搜索，BFS/" title="广度优先搜索，BFS" class="md-nav__link">
+      广度优先搜索，BFS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../搜索/深度优先搜索，DFS/" title="深度优先搜索，DFS" class="md-nav__link">
+      深度优先搜索，DFS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      数论，数学
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        数论，数学
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11-1" type="checkbox" id="nav-11-1">
+    
+    <label class="md-nav__link" for="nav-11-1">
+      整数研究
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-11-1">
+        整数研究
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../数论，数学/整数研究/同余，中国剩余定理/" title="同余，中国剩余定理" class="md-nav__link">
+      同余，中国剩余定理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../数论，数学/整数研究/扩展欧几里得/" title="扩展欧几里得" class="md-nav__link">
+      扩展欧几里得
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../数论，数学/整数研究/最大公约数，GCD/" title="最大公约数，GCD" class="md-nav__link">
+      最大公约数，GCD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../数论，数学/整数研究/逆元/" title="逆元" class="md-nav__link">
+      逆元
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12" checked>
+    
+    <label class="md-nav__link" for="nav-12">
+      树形结构
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-12">
+        树形结构
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12-1" type="checkbox" id="nav-12-1">
+    
+    <label class="md-nav__link" for="nav-12-1">
+      树上距离
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-12-1">
+        树上距离
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../树上距离/最近公共祖先，LCA/" title="最近公共祖先，LCA" class="md-nav__link">
+      最近公共祖先，LCA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../树上距离/树的直径/" title="树的直径" class="md-nav__link">
+      树的直径
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12-2" type="checkbox" id="nav-12-2">
+    
+    <label class="md-nav__link" for="nav-12-2">
+      树的应用
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-12-2">
+        树的应用
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../树的应用/并查集/" title="并查集" class="md-nav__link">
+      并查集
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12-3" type="checkbox" id="nav-12-3" checked>
+    
+    <label class="md-nav__link" for="nav-12-3">
+      线段树
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-12-3">
+        线段树
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="线段树" class="md-nav__link md-nav__link--active">
+      线段树
+    </a>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/todest/template.git/edit/master/docs/树形结构/线段树/线段树.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>线段树</h1>
+                
+                <p>线段树功能:update:单点增减 query:区间求和</p>
+<pre><code>#include &lt;cstdio&gt;
+
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+const int maxn = 55555;
+int sum[maxn&lt;&lt;2];
+void PushUP(int rt) {
+       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
+}
+void build(int l,int r,int rt) {
+       if (l == r) {
+              scanf(&quot;%d&quot;,&amp;sum[rt]);
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       build(lson);
+       build(rson);
+       PushUP(rt);
+}
+void update(int p,int add,int l,int r,int rt) {
+       if (l == r) {
+              sum[rt] += add;
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       if (p &lt;= m) update(p , add , lson);
+       else update(p , add , rson);
+       PushUP(rt);
+}
+int query(int L,int R,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              return sum[rt];
+       }
+       int m = (l + r) &gt;&gt; 1;
+       int ret = 0;
+       if (L &lt;= m) ret += query(L , R , lson);
+       if (R &gt; m) ret += query(L , R , rson);
+       return ret;
+}
+int main() {
+       int T , n;
+       scanf(&quot;%d&quot;,&amp;T);
+       for (int cas = 1 ; cas &lt;= T ; cas ++) {
+              printf(&quot;Case %d:\n&quot;,cas);
+              scanf(&quot;%d&quot;,&amp;n);
+              build(1 , n , 1);
+              char op[10];
+              while (scanf(&quot;%s&quot;,op)) {
+                     if (op[0] == 'E') break;
+                     int a , b;
+                     scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+                     if (op[0] == 'Q') printf(&quot;%d\n&quot;,query(a , b , 1 , n , 1));
+                     else if (op[0] == 'S') update(a , -b , 1 , n , 1);
+                     else update(a , b , 1 , n , 1);
+              }
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树功能:update:单点替换 query:区间最值</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+const int maxn = 222222;
+int MAX[maxn&lt;&lt;2];
+void PushUP(int rt) {
+       MAX[rt] = max(MAX[rt&lt;&lt;1] , MAX[rt&lt;&lt;1|1]);
+}
+void build(int l,int r,int rt) {
+       if (l == r) {
+              scanf(&quot;%d&quot;,&amp;MAX[rt]);
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       build(lson);
+       build(rson);
+       PushUP(rt);
+}
+void update(int p,int sc,int l,int r,int rt) {
+       if (l == r) {
+              MAX[rt] = sc;
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       if (p &lt;= m) update(p , sc , lson);
+       else update(p , sc , rson);
+       PushUP(rt);
+}
+int query(int L,int R,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              return MAX[rt];
+       }
+       int m = (l + r) &gt;&gt; 1;
+       int ret = 0;
+       if (L &lt;= m) ret = max(ret , query(L , R , lson));
+       if (R &gt; m) ret = max(ret , query(L , R , rson));
+       return ret;
+}
+int main() {
+       int n , m;
+       while (~scanf(&quot;%d%d&quot;,&amp;n,&amp;m)) {
+              build(1 , n , 1);
+              while (m --) {
+                     char op[2];
+                     int a , b;
+                     scanf(&quot;%s%d%d&quot;,op,&amp;a,&amp;b);
+                     if (op[0] == 'Q') printf(&quot;%d\n&quot;,query(a , b , 1 , n , 1));
+                     else update(a , b , 1 , n , 1);
+              }
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树功能:update:单点增减 query:区间求和</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+const int maxn = 5555;
+int sum[maxn&lt;&lt;2];
+void PushUP(int rt) {
+       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
+}
+void build(int l,int r,int rt) {
+       sum[rt] = 0;
+       if (l == r) return ;
+       int m = (l + r) &gt;&gt; 1;
+       build(lson);
+       build(rson);
+}
+void update(int p,int l,int r,int rt) {
+       if (l == r) {
+              sum[rt] ++;
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       if (p &lt;= m) update(p , lson);
+       else update(p , rson);
+       PushUP(rt);
+}
+int query(int L,int R,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              return sum[rt];
+       }
+       int m = (l + r) &gt;&gt; 1;
+       int ret = 0;
+       if (L &lt;= m) ret += query(L , R , lson);
+       if (R &gt; m) ret += query(L , R , rson);
+       return ret;
+}
+int x[maxn];
+int main() {
+       int n;
+       while (~scanf(&quot;%d&quot;,&amp;n)) {
+              build(0 , n - 1 , 1);
+              int sum = 0;
+              for (int i = 0 ; i &lt; n ; i ++) {
+                     scanf(&quot;%d&quot;,&amp;x[i]);
+                     sum += query(x[i] , n - 1 , 0 , n - 1 , 1);
+                     update(x[i] , 0 , n - 1 , 1);
+              }
+              int ret = sum;
+              for (int i = 0 ; i &lt; n ; i ++) {
+                     sum += n - x[i] - x[i] - 1;
+                     ret = min(ret , sum);
+              }
+              printf(&quot;%d\n&quot;,ret);
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树功能:query:区间求最大值的位子(直接把update的操作在query里做了)</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+const int maxn = 222222;
+int h , w , n;
+int MAX[maxn&lt;&lt;2];
+void PushUP(int rt) {
+       MAX[rt] = max(MAX[rt&lt;&lt;1] , MAX[rt&lt;&lt;1|1]);
+}
+void build(int l,int r,int rt) {
+       MAX[rt] = w;
+       if (l == r) return ;
+       int m = (l + r) &gt;&gt; 1;
+       build(lson);
+       build(rson);
+}
+int query(int x,int l,int r,int rt) {
+       if (l == r) {
+              MAX[rt] -= x;
+              return l;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       int ret = (MAX[rt&lt;&lt;1] &gt;= x) ? query(x , lson) : query(x , rson);
+       PushUP(rt);
+       return ret;
+}
+int main() {
+       while (~scanf(&quot;%d%d%d&quot;,&amp;h,&amp;w,&amp;n)) {
+              if (h &gt; n) h = n;
+              build(1 , h , 1);
+              while (n --) {
+                     int x;
+                     scanf(&quot;%d&quot;,&amp;x);
+                     if (MAX[1] &lt; x) puts(&quot;-1&quot;);
+                     else printf(&quot;%d\n&quot;,query(x , 1 , h , 1));
+              }
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树功能:update:成段替换 (由于只query一次总区间,所以可以直接输出1结点的信息)</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+const int maxn = 111111;
+int h , w , n;
+int col[maxn&lt;&lt;2];
+int sum[maxn&lt;&lt;2];
+void PushUp(int rt) {
+       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
+}
+void PushDown(int rt,int m) {
+       if (col[rt]) {
+              col[rt&lt;&lt;1] = col[rt&lt;&lt;1|1] = col[rt];
+              sum[rt&lt;&lt;1] = (m - (m &gt;&gt; 1)) * col[rt];
+              sum[rt&lt;&lt;1|1] = (m &gt;&gt; 1) * col[rt];
+              col[rt] = 0;
+       }
+}
+void build(int l,int r,int rt) {
+       col[rt] = 0;
+       sum[rt] = 1;
+       if (l == r) return ;
+       int m = (l + r) &gt;&gt; 1;
+       build(lson);
+       build(rson);
+       PushUp(rt);
+}
+void update(int L,int R,int c,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              col[rt] = c;
+              sum[rt] = c * (r - l + 1);
+              return ;
+       }
+       PushDown(rt , r - l + 1);
+       int m = (l + r) &gt;&gt; 1;
+       if (L &lt;= m) update(L , R , c , lson);
+       if (R &gt; m) update(L , R , c , rson);
+       PushUp(rt);
+}
+int main() {
+       int T , n , m;
+       scanf(&quot;%d&quot;,&amp;T);
+       for (int cas = 1 ; cas &lt;= T ; cas ++) {
+              scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+              build(1 , n , 1);
+              while (m --) {
+                     int a , b , c;
+                     scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+                     update(a , b , c , 1 , n , 1);
+              }
+              printf(&quot;Case %d: The total value of the hook is %d.\n&quot;,cas , sum[1]);
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树功能:update:成段增减 query:区间求和</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+#define LL long long
+const int maxn = 111111;
+LL add[maxn&lt;&lt;2];
+LL sum[maxn&lt;&lt;2];
+void PushUp(int rt) {
+       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
+}
+void PushDown(int rt,int m) {
+       if (add[rt]) {
+              add[rt&lt;&lt;1] += add[rt];
+              add[rt&lt;&lt;1|1] += add[rt];
+              sum[rt&lt;&lt;1] += add[rt] * (m - (m &gt;&gt; 1));
+              sum[rt&lt;&lt;1|1] += add[rt] * (m &gt;&gt; 1);
+              add[rt] = 0;
+       }
+}
+void build(int l,int r,int rt) {
+       add[rt] = 0;
+       if (l == r) {
+              scanf(&quot;%lld&quot;,&amp;sum[rt]);
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       build(lson);
+       build(rson);
+       PushUp(rt);
+}
+void update(int L,int R,int c,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              add[rt] += c;
+              sum[rt] += (LL)c * (r - l + 1);
+              return ;
+       }
+       PushDown(rt , r - l + 1);
+       int m = (l + r) &gt;&gt; 1;
+       if (L &lt;= m) update(L , R , c , lson);
+       if (m &lt; R) update(L , R , c , rson);
+       PushUp(rt);
+}
+LL query(int L,int R,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              return sum[rt];
+       }
+       PushDown(rt , r - l + 1);
+       int m = (l + r) &gt;&gt; 1;
+       LL ret = 0;
+       if (L &lt;= m) ret += query(L , R , lson);
+       if (m &lt; R) ret += query(L , R , rson);
+       return ret;
+}
+int main() {
+       int N , Q;
+       scanf(&quot;%d%d&quot;,&amp;N,&amp;Q);
+       build(1 , N , 1);
+       while (Q --) {
+              char op[2];
+              int a , b , c;
+              scanf(&quot;%s&quot;,op);
+              if (op[0] == 'Q') {
+                     scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+                     printf(&quot;%lld\n&quot;,query(a , b , 1 , N , 1));
+              } else {
+                     scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+                     update(a , b , c , 1 , N , 1);
+              }
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树功能:update:成段替换 query:简单hash</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+
+const int maxn = 11111;
+bool hash[maxn];
+int li[maxn] , ri[maxn];
+int X[maxn*3];
+int col[maxn&lt;&lt;4];
+int cnt;
+
+void PushDown(int rt) {
+       if (col[rt] != -1) {
+              col[rt&lt;&lt;1] = col[rt&lt;&lt;1|1] = col[rt];
+              col[rt] = -1;
+       }
+}
+void update(int L,int R,int c,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              col[rt] = c;
+              return ;
+       }
+       PushDown(rt);
+       int m = (l + r) &gt;&gt; 1;
+       if (L &lt;= m) update(L , R , c , lson);
+       if (m &lt; R) update(L , R , c , rson);
+}
+void query(int l,int r,int rt) {
+       if (col[rt] != -1) {
+              if (!hash[col[rt]]) cnt ++;
+              hash[ col[rt] ] = true;
+              return ;
+       }
+       if (l == r) return ;
+       int m = (l + r) &gt;&gt; 1;
+       query(lson);
+       query(rson);
+}
+int Bin(int key,int n,int X[]) {
+       int l = 0 , r = n - 1;
+       while (l &lt;= r) {
+              int m = (l + r) &gt;&gt; 1;
+              if (X[m] == key) return m;
+              if (X[m] &lt; key) l = m + 1;
+              else r = m - 1;
+       }
+       return -1;
+}
+int main() {
+       int T , n;
+       scanf(&quot;%d&quot;,&amp;T);
+       while (T --) {
+              scanf(&quot;%d&quot;,&amp;n);
+              int nn = 0;
+              for (int i = 0 ; i &lt; n ; i ++) {
+                     scanf(&quot;%d%d&quot;,&amp;li[i] , &amp;ri[i]);
+                     X[nn++] = li[i];
+                     X[nn++] = ri[i];
+              }
+              sort(X , X + nn);
+              int m = 1;
+              for (int i = 1 ; i &lt; nn; i ++) {
+                     if (X[i] != X[i-1]) X[m ++] = X[i];
+              }
+              for (int i = m - 1 ; i &gt; 0 ; i --) {
+                     if (X[i] != X[i-1] + 1) X[m ++] = X[i] + 1;
+              }
+              sort(X , X + m);
+              memset(col , -1 , sizeof(col));
+              for (int i = 0 ; i &lt; n ; i ++) {
+                     int l = Bin(li[i] , m , X);
+                     int r = Bin(ri[i] , m , X);
+                     update(l , r , i , 0 , m , 1);
+              }
+              cnt = 0;
+              memset(hash , false , sizeof(hash));
+              query(0 , m , 1);
+              printf(&quot;%d\n&quot;,cnt);
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树功能:update:成段替换,区间异或 query:简单hash</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cctype&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+
+const int maxn = 131072;
+bool hash[maxn];
+int cover[maxn&lt;&lt;2];
+int XOR[maxn&lt;&lt;2];
+void FXOR(int rt) {
+       if (cover[rt] != -1) cover[rt] ^= 1;
+       else XOR[rt] ^= 1;
+}
+void PushDown(int rt) {
+       if (cover[rt] != -1) {
+              cover[rt&lt;&lt;1] = cover[rt&lt;&lt;1|1] = cover[rt];
+              XOR[rt&lt;&lt;1] = XOR[rt&lt;&lt;1|1] = 0;
+              cover[rt] = -1;
+       }
+       if (XOR[rt]) {
+              FXOR(rt&lt;&lt;1);
+              FXOR(rt&lt;&lt;1|1);
+              XOR[rt] = 0;
+       }
+}
+void update(char op,int L,int R,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              if (op == 'U') {
+                     cover[rt] = 1;
+                     XOR[rt] = 0;
+              } else if (op == 'D') {
+                     cover[rt] = 0;
+                     XOR[rt] = 0;
+              } else if (op == 'C' || op == 'S') {
+                     FXOR(rt);
+              }
+              return ;
+       }
+       PushDown(rt);
+       int m = (l + r) &gt;&gt; 1;
+       if (L &lt;= m) update(op , L , R , lson);
+       else if (op == 'I' || op == 'C') {
+              XOR[rt&lt;&lt;1] = cover[rt&lt;&lt;1] = 0;
+       }
+       if (m &lt; R) update(op , L , R , rson);
+       else if (op == 'I' || op == 'C') {
+              XOR[rt&lt;&lt;1|1] = cover[rt&lt;&lt;1|1] = 0;
+       }
+}
+void query(int l,int r,int rt) {
+       if (cover[rt] == 1) {
+              for (int it = l ; it &lt;= r ; it ++) {
+                     hash[it] = true;
+              }
+              return ;
+       } else if (cover[rt] == 0) return ;
+       if (l == r) return ;
+       PushDown(rt);
+       int m = (l + r) &gt;&gt; 1;
+       query(lson);
+       query(rson);
+}
+int main() {
+       cover[1] = XOR[1] = 0;
+       char op , l , r;
+       int a , b;
+       while ( ~scanf(&quot;%c %c%d,%d%c\n&quot;,&amp;op , &amp;l , &amp;a , &amp;b , &amp;r) ) {
+              a &lt;&lt;= 1 , b &lt;&lt;= 1;
+              if (l == '(') a ++;
+              if (r == ')') b --;
+              if (a &gt; b) {
+                     if (op == 'C' || op == 'I') {
+                            cover[1] = XOR[1] = 0;
+                     }
+              } else update(op , a , b , 0 , maxn , 1);
+       }
+       query(0 , maxn , 1);
+       bool flag = false;
+       int s = -1 , e;
+       for (int i = 0 ; i &lt;= maxn ; i ++) {
+              if (hash[i]) {
+                     if (s == -1) s = i;
+                     e = i;
+              } else {
+                     if (s != -1) {
+                            if (flag) printf(&quot; &quot;);
+                            flag = true;
+                            printf(&quot;%c%d,%d%c&quot;,s&amp;1?'(':'[' , s&gt;&gt;1 , (e+1)&gt;&gt;1 , e&amp;1?')':']');
+                            s = -1;
+                     }
+              }
+       }
+       if (!flag) printf(&quot;empty set&quot;);
+       puts(&quot;&quot;);
+       return 0;
+}
+</code></pre>
+
+<p>线段树操作:update:区间替换 query:询问满足条件的最左断点</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cctype&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+
+const int maxn = 55555;
+int lsum[maxn&lt;&lt;2] , rsum[maxn&lt;&lt;2] , msum[maxn&lt;&lt;2];
+int cover[maxn&lt;&lt;2];
+
+void PushDown(int rt,int m) {
+       if (cover[rt] != -1) {
+              cover[rt&lt;&lt;1] = cover[rt&lt;&lt;1|1] = cover[rt];
+              msum[rt&lt;&lt;1] = lsum[rt&lt;&lt;1] = rsum[rt&lt;&lt;1] = cover[rt] ? 0 : m - (m &gt;&gt; 1);
+              msum[rt&lt;&lt;1|1] = lsum[rt&lt;&lt;1|1] = rsum[rt&lt;&lt;1|1] = cover[rt] ? 0 : (m &gt;&gt; 1);
+              cover[rt] = -1;
+       }
+}
+void PushUp(int rt,int m) {
+       lsum[rt] = lsum[rt&lt;&lt;1];
+       rsum[rt] = rsum[rt&lt;&lt;1|1];
+       if (lsum[rt] == m - (m &gt;&gt; 1)) lsum[rt] += lsum[rt&lt;&lt;1|1];
+       if (rsum[rt] == (m &gt;&gt; 1)) rsum[rt] += rsum[rt&lt;&lt;1];
+       msum[rt] = max(lsum[rt&lt;&lt;1|1] + rsum[rt&lt;&lt;1] , max(msum[rt&lt;&lt;1] , msum[rt&lt;&lt;1|1]));
+}
+void build(int l,int r,int rt) {
+       msum[rt] = lsum[rt] = rsum[rt] = r - l + 1;
+       cover[rt] = -1;
+       if (l == r) return ;
+       int m = (l + r) &gt;&gt; 1;
+       build(lson);
+       build(rson);
+}
+void update(int L,int R,int c,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              msum[rt] = lsum[rt] = rsum[rt] = c ? 0 : r - l + 1;
+              cover[rt] = c;
+              return ;
+       }
+       PushDown(rt , r - l + 1);
+       int m = (l + r) &gt;&gt; 1;
+       if (L &lt;= m) update(L , R , c , lson);
+       if (m &lt; R) update(L , R , c , rson);
+       PushUp(rt , r - l + 1);
+}
+int query(int w,int l,int r,int rt) {
+       if (l == r) return l;
+       PushDown(rt , r - l + 1);
+       int m = (l + r) &gt;&gt; 1;
+       if (msum[rt&lt;&lt;1] &gt;= w) return query(w , lson);
+       else if (rsum[rt&lt;&lt;1] + lsum[rt&lt;&lt;1|1] &gt;= w) return m - rsum[rt&lt;&lt;1] + 1;
+       return query(w , rson);
+}
+int main() {
+       int n , m;
+       scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+       build(1 , n , 1);
+       while (m --) {
+              int op , a , b;
+              scanf(&quot;%d&quot;,&amp;op);
+              if (op == 1) {
+                     scanf(&quot;%d&quot;,&amp;a);
+                     if (msum[1] &lt; a) puts(&quot;0&quot;);
+                     else {
+                            int p = query(a , 1 , n , 1);
+                            printf(&quot;%d\n&quot;,p);
+                            update(p , p + a - 1 , 1 , 1 , n , 1);
+                     }
+              } else {
+                     scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+                     update(a , a + b - 1 , 0 , 1 , n , 1);
+              }
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树操作:update:区间增减 query:直接取根节点的值</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cctype&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+
+const int maxn = 2222;
+int cnt[maxn &lt;&lt; 2];
+double sum[maxn &lt;&lt; 2];
+double X[maxn];
+struct Seg {
+       double h , l , r;
+       int s;
+       Seg(){}
+       Seg(double a,double b,double c,int d) : l(a) , r(b) , h(c) , s(d) {}
+       bool operator &lt; (const Seg &amp;cmp) const {
+              return h &lt; cmp.h;
+       }
+}ss[maxn];
+void PushUp(int rt,int l,int r) {
+       if (cnt[rt]) sum[rt] = X[r+1] - X[l];
+       else if (l == r) sum[rt] = 0;
+       else sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
+}
+void update(int L,int R,int c,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              cnt[rt] += c;
+              PushUp(rt , l , r);
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       if (L &lt;= m) update(L , R , c , lson);
+       if (m &lt; R) update(L , R , c , rson);
+       PushUp(rt , l , r);
+}
+int Bin(double key,int n,double X[]) {
+       int l = 0 , r = n - 1;
+       while (l &lt;= r) {
+              int m = (l + r) &gt;&gt; 1;
+              if (X[m] == key) return m;
+              if (X[m] &lt; key) l = m + 1;
+              else r = m - 1;
+       }
+       return -1;
+}
+int main() {
+       int n , cas = 1;
+       while (~scanf(&quot;%d&quot;,&amp;n) &amp;&amp; n) {
+              int m = 0;
+              while (n --) {
+                     double a , b , c , d;
+                     scanf(&quot;%lf%lf%lf%lf&quot;,&amp;a,&amp;b,&amp;c,&amp;d);
+                     X[m] = a;
+                     ss[m++] = Seg(a , c , b , 1);
+                     X[m] = c;
+                     ss[m++] = Seg(a , c , d , -1);
+              }
+              sort(X , X + m);
+              sort(ss , ss + m);
+              int k = 1;
+              for (int i = 1 ; i &lt; m ; i ++) {
+                     if (X[i] != X[i-1]) X[k++] = X[i];
+              }
+              memset(cnt , 0 , sizeof(cnt));
+              memset(sum , 0 , sizeof(sum));
+              double ret = 0;
+              for (int i = 0 ; i &lt; m - 1 ; i ++) {
+                     int l = Bin(ss[i].l , k , X);
+                     int r = Bin(ss[i].r , k , X) - 1;
+                     if (l &lt;= r) update(l , r , ss[i].s , 0 , k - 1, 1);
+                     ret += sum[1] * (ss[i+1].h - ss[i].h);
+              }
+              printf(&quot;Test case #%d\nTotal explored area: %.2lf\n\n&quot;,cas++ , ret);
+       }
+       return 0;
+}
+</code></pre>
+
+<p>线段树操作:update:区间增减 query:直接取根节点的值</p>
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cctype&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+#define lson l , m , rt &lt;&lt; 1
+#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+
+const int maxn = 22222;
+struct Seg{
+       int l , r , h , s;
+       Seg() {}
+       Seg(int a,int b,int c,int d):l(a) , r(b) , h(c) , s(d) {}
+       bool operator &lt; (const Seg &amp;cmp) const {
+              return h &lt; cmp.h;
+       }
+}ss[maxn];
+bool lbd[maxn&lt;&lt;2] , rbd[maxn&lt;&lt;2];
+int numseg[maxn&lt;&lt;2];
+int cnt[maxn&lt;&lt;2];
+int len[maxn&lt;&lt;2];
+void PushUP(int rt,int l,int r) {
+       if (cnt[rt]) {
+              lbd[rt] = rbd[rt] = 1;
+              len[rt] = r - l + 1;
+              numseg[rt] = 2;
+       } else if (l == r) {
+              len[rt] = numseg[rt] = lbd[rt] = rbd[rt] = 0;
+       } else {
+              lbd[rt] = lbd[rt&lt;&lt;1];
+              rbd[rt] = rbd[rt&lt;&lt;1|1];
+              len[rt] = len[rt&lt;&lt;1] + len[rt&lt;&lt;1|1];
+              numseg[rt] = numseg[rt&lt;&lt;1] + numseg[rt&lt;&lt;1|1];
+              if (lbd[rt&lt;&lt;1|1] &amp;&amp; rbd[rt&lt;&lt;1]) numseg[rt] -= 2;//两条线重合
+       }
+}
+void update(int L,int R,int c,int l,int r,int rt) {
+       if (L &lt;= l &amp;&amp; r &lt;= R) {
+              cnt[rt] += c;
+              PushUP(rt , l , r);
+              return ;
+       }
+       int m = (l + r) &gt;&gt; 1;
+       if (L &lt;= m) update(L , R , c , lson);
+       if (m &lt; R) update(L , R , c , rson);
+       PushUP(rt , l , r);
+}
+int main() {
+       int n;
+       while (~scanf(&quot;%d&quot;,&amp;n)) {
+              int m = 0;
+              int lbd = 10000, rbd = -10000;
+              for (int i = 0 ; i &lt; n ; i ++) {
+                     int a , b , c , d;
+                     scanf(&quot;%d%d%d%d&quot;,&amp;a,&amp;b,&amp;c,&amp;d);
+                     lbd = min(lbd , a);
+                     rbd = max(rbd , c);
+                     ss[m++] = Seg(a , c , b , 1);
+                     ss[m++] = Seg(a , c , d , -1);
+              }
+              sort(ss , ss + m);
+              int ret = 0 , last = 0;
+              for (int i = 0 ; i &lt; m ; i ++) {
+                     if (ss[i].l &lt; ss[i].r) update(ss[i].l , ss[i].r - 1 , ss[i].s , lbd , rbd - 1 , 1);
+                     ret += numseg[1] * (ss[i+1].h - ss[i].h);
+                     ret += abs(len[1] - last);
+                     last = len[1];
+              }
+              printf(&quot;%d\n&quot;,ret);
+       }
+       return 0;
+}
+</code></pre>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../../树的应用/并查集/" title="并查集" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                并查集
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.ac79c3b0.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+    
+  </body>
+</html>
