@@ -844,40 +844,73 @@
                 
                   <h1>快速排序</h1>
                 
-                <pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-void quick_sort(int *a,int left,int right)
-{
-    if(left&gt;=right)return;
-    swap(a[left],a[(left+right)/2]);
-    int i=left,j=right,key=a[left];
-    while(i&lt;j)
-    {
-        while(i&lt;j&amp;&amp;key&lt;a[j])j--;
-        if(i&lt;j)a[i++]=a[j];
-        while(i&lt;j&amp;&amp;key&gt;a[i])i++;
-        if(i&lt;j)a[j--]=a[i];
-    }
-    a[i]=key;
-    quick_sort(a,left,i-1);
-    quick_sort(a,i+1,right);
-}
-int main()
-{
-    int N,a[100020];
-    cin&gt;&gt;N;
-    for(int i=0;i&lt;N;i++)
-        cin&gt;&gt;a[i];
-    quick_sort(a,0,N-1);
-    for(int i=0;i&lt;N;i++)
-    {
-        if(!i)cout&lt;&lt;a[i];
-        else cout&lt;&lt;' '&lt;&lt;a[i];
-    }
-    cout&lt;&lt;endl;
-    return 0;
-}
-</code></pre>
+                <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">quick_sort</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">left</span><span class="p">,</span><span class="kt">int</span> <span class="n">right</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">left</span><span class="o">&gt;=</span><span class="n">right</span><span class="p">)</span><span class="k">return</span><span class="p">;</span>
+    <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">left</span><span class="p">],</span><span class="n">a</span><span class="p">[(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">left</span><span class="p">,</span><span class="n">j</span><span class="o">=</span><span class="n">right</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="o">&amp;&amp;</span><span class="n">key</span><span class="o">&lt;</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="n">j</span><span class="o">--</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="p">)</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="o">&amp;&amp;</span><span class="n">key</span><span class="o">&gt;</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">j</span><span class="p">)</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="o">--</span><span class="p">]</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">key</span><span class="p">;</span>
+    <span class="n">quick_sort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">left</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">quick_sort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">right</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">N</span><span class="p">,</span><span class="n">a</span><span class="p">[</span><span class="mi">100020</span><span class="p">];</span>
+    <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">N</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">N</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">quick_sort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">N</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">i</span><span class="p">)</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">else</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="sc">&#39; &#39;</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
                 
                   
                 

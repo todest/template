@@ -844,792 +844,1536 @@
                 
                   <h1>线段树</h1>
                 
-                <p>线段树功能:update:单点增减 query:区间求和</p>
-<pre><code>#include &lt;cstdio&gt;
+                <p>线段树功能:update:单点增减 query:区间求和
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
 
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
-const int maxn = 55555;
-int sum[maxn&lt;&lt;2];
-void PushUP(int rt) {
-       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">55555</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">sum</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
 }
-void build(int l,int r,int rt) {
-       if (l == r) {
-              scanf(&quot;%d&quot;,&amp;sum[rt]);
-              return ;
+<span class="nv">void</span> <span class="nv">build</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">sum</span>[<span class="nv">rt</span>]<span class="ss">)</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       build(lson);
-       build(rson);
-       PushUP(rt);
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
 }
-void update(int p,int add,int l,int r,int rt) {
-       if (l == r) {
-              sum[rt] += add;
-              return ;
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">p</span>,<span class="nv">int</span> <span class="nv">add</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">+=</span> <span class="nv">add</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       if (p &lt;= m) update(p , add , lson);
-       else update(p , add , rson);
-       PushUP(rt);
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">p</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">p</span> , <span class="nv">add</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">p</span> , <span class="nv">add</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
 }
-int query(int L,int R,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              return sum[rt];
+<span class="nv">int</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="k">return</span> <span class="nv">sum</span>[<span class="nv">rt</span>]<span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       int ret = 0;
-       if (L &lt;= m) ret += query(L , R , lson);
-       if (R &gt; m) ret += query(L , R , rson);
-       return ret;
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">R</span> <span class="o">&gt;</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">return</span> <span class="nv">ret</span><span class="c1">;</span>
 }
-int main() {
-       int T , n;
-       scanf(&quot;%d&quot;,&amp;T);
-       for (int cas = 1 ; cas &lt;= T ; cas ++) {
-              printf(&quot;Case %d:\n&quot;,cas);
-              scanf(&quot;%d&quot;,&amp;n);
-              build(1 , n , 1);
-              char op[10];
-              while (scanf(&quot;%s&quot;,op)) {
-                     if (op[0] == 'E') break;
-                     int a , b;
-                     scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
-                     if (op[0] == 'Q') printf(&quot;%d\n&quot;,query(a , b , 1 , n , 1));
-                     else if (op[0] == 'S') update(a , -b , 1 , n , 1);
-                     else update(a , b , 1 , n , 1);
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">T</span> , <span class="nv">n</span><span class="c1">;</span>
+       <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">T</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">cas</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">; cas &lt;= T ; cas ++) {</span>
+              <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Case %d:</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">cas</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">build</span><span class="ss">(</span><span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">char</span> <span class="nv">op</span>[<span class="mi">10</span>]<span class="c1">;</span>
+              <span class="k">while</span> <span class="ss">(</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%s</span><span class="s2">&quot;</span>,<span class="nv">op</span><span class="ss">))</span> {
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span>[<span class="mi">0</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">E</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="k">break</span><span class="c1">;</span>
+                     <span class="nv">int</span> <span class="nv">a</span> , <span class="nv">b</span><span class="c1">;</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span>[<span class="mi">0</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">Q</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">query</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">b</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">))</span><span class="c1">;</span>
+                     <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span>[<span class="mi">0</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">S</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">a</span> , <span class="o">-</span><span class="nv">b</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="k">else</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">b</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
               }
        }
-       return 0;
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
+线段树功能:update:单点替换 query:区间最值
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
 
-<p>线段树功能:update:单点替换 query:区间最值</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
-const int maxn = 222222;
-int MAX[maxn&lt;&lt;2];
-void PushUP(int rt) {
-       MAX[rt] = max(MAX[rt&lt;&lt;1] , MAX[rt&lt;&lt;1|1]);
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">222222</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">MAX</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">MAX</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">max</span><span class="ss">(</span><span class="nv">MAX</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] , <span class="nv">MAX</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="ss">)</span><span class="c1">;</span>
 }
-void build(int l,int r,int rt) {
-       if (l == r) {
-              scanf(&quot;%d&quot;,&amp;MAX[rt]);
-              return ;
+<span class="nv">void</span> <span class="nv">build</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">MAX</span>[<span class="nv">rt</span>]<span class="ss">)</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       build(lson);
-       build(rson);
-       PushUP(rt);
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
 }
-void update(int p,int sc,int l,int r,int rt) {
-       if (l == r) {
-              MAX[rt] = sc;
-              return ;
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">p</span>,<span class="nv">int</span> <span class="nv">sc</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">MAX</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">sc</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       if (p &lt;= m) update(p , sc , lson);
-       else update(p , sc , rson);
-       PushUP(rt);
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">p</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">p</span> , <span class="nv">sc</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">p</span> , <span class="nv">sc</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
 }
-int query(int L,int R,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              return MAX[rt];
+<span class="nv">int</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="k">return</span> <span class="nv">MAX</span>[<span class="nv">rt</span>]<span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       int ret = 0;
-       if (L &lt;= m) ret = max(ret , query(L , R , lson));
-       if (R &gt; m) ret = max(ret , query(L , R , rson));
-       return ret;
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">=</span> <span class="nv">max</span><span class="ss">(</span><span class="nv">ret</span> , <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">lson</span><span class="ss">))</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">R</span> <span class="o">&gt;</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">=</span> <span class="nv">max</span><span class="ss">(</span><span class="nv">ret</span> , <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">rson</span><span class="ss">))</span><span class="c1">;</span>
+       <span class="k">return</span> <span class="nv">ret</span><span class="c1">;</span>
 }
-int main() {
-       int n , m;
-       while (~scanf(&quot;%d%d&quot;,&amp;n,&amp;m)) {
-              build(1 , n , 1);
-              while (m --) {
-                     char op[2];
-                     int a , b;
-                     scanf(&quot;%s%d%d&quot;,op,&amp;a,&amp;b);
-                     if (op[0] == 'Q') printf(&quot;%d\n&quot;,query(a , b , 1 , n , 1));
-                     else update(a , b , 1 , n , 1);
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">n</span> , <span class="nv">m</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="o">~</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span>,<span class="o">&amp;</span><span class="nv">m</span><span class="ss">))</span> {
+              <span class="nv">build</span><span class="ss">(</span><span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">while</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">--</span><span class="ss">)</span> {
+                     <span class="nv">char</span> <span class="nv">op</span>[<span class="mi">2</span>]<span class="c1">;</span>
+                     <span class="nv">int</span> <span class="nv">a</span> , <span class="nv">b</span><span class="c1">;</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%s%d%d</span><span class="s2">&quot;</span>,<span class="nv">op</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span>[<span class="mi">0</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">Q</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">query</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">b</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">))</span><span class="c1">;</span>
+                     <span class="k">else</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">b</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
               }
        }
-       return 0;
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
+线段树功能:update:单点增减 query:区间求和
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
 
-<p>线段树功能:update:单点增减 query:区间求和</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
-const int maxn = 5555;
-int sum[maxn&lt;&lt;2];
-void PushUP(int rt) {
-       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">5555</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">sum</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
 }
-void build(int l,int r,int rt) {
-       sum[rt] = 0;
-       if (l == r) return ;
-       int m = (l + r) &gt;&gt; 1;
-       build(lson);
-       build(rson);
+<span class="nv">void</span> <span class="nv">build</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="k">return</span> <span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
 }
-void update(int p,int l,int r,int rt) {
-       if (l == r) {
-              sum[rt] ++;
-              return ;
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">p</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">++</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       if (p &lt;= m) update(p , lson);
-       else update(p , rson);
-       PushUP(rt);
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">p</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">p</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">p</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
 }
-int query(int L,int R,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              return sum[rt];
+<span class="nv">int</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="k">return</span> <span class="nv">sum</span>[<span class="nv">rt</span>]<span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       int ret = 0;
-       if (L &lt;= m) ret += query(L , R , lson);
-       if (R &gt; m) ret += query(L , R , rson);
-       return ret;
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">R</span> <span class="o">&gt;</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">return</span> <span class="nv">ret</span><span class="c1">;</span>
 }
-int x[maxn];
-int main() {
-       int n;
-       while (~scanf(&quot;%d&quot;,&amp;n)) {
-              build(0 , n - 1 , 1);
-              int sum = 0;
-              for (int i = 0 ; i &lt; n ; i ++) {
-                     scanf(&quot;%d&quot;,&amp;x[i]);
-                     sum += query(x[i] , n - 1 , 0 , n - 1 , 1);
-                     update(x[i] , 0 , n - 1 , 1);
+<span class="nv">int</span> <span class="nv">x</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">n</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="o">~</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span><span class="ss">))</span> {
+              <span class="nv">build</span><span class="ss">(</span><span class="mi">0</span> , <span class="nv">n</span> <span class="o">-</span> <span class="mi">1</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">int</span> <span class="nv">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt; n ; i ++) {</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">x</span>[<span class="nv">i</span>]<span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">sum</span> <span class="o">+=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">x</span>[<span class="nv">i</span>] , <span class="nv">n</span> <span class="o">-</span> <span class="mi">1</span> , <span class="mi">0</span> , <span class="nv">n</span> <span class="o">-</span> <span class="mi">1</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">update</span><span class="ss">(</span><span class="nv">x</span>[<span class="nv">i</span>] , <span class="mi">0</span> , <span class="nv">n</span> <span class="o">-</span> <span class="mi">1</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
               }
-              int ret = sum;
-              for (int i = 0 ; i &lt; n ; i ++) {
-                     sum += n - x[i] - x[i] - 1;
-                     ret = min(ret , sum);
+              <span class="nv">int</span> <span class="nv">ret</span> <span class="o">=</span> <span class="nv">sum</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt; n ; i ++) {</span>
+                     <span class="nv">sum</span> <span class="o">+=</span> <span class="nv">n</span> <span class="o">-</span> <span class="nv">x</span>[<span class="nv">i</span>] <span class="o">-</span> <span class="nv">x</span>[<span class="nv">i</span>] <span class="o">-</span> <span class="mi">1</span><span class="c1">;</span>
+                     <span class="nv">ret</span> <span class="o">=</span> <span class="nv">min</span><span class="ss">(</span><span class="nv">ret</span> , <span class="nv">sum</span><span class="ss">)</span><span class="c1">;</span>
               }
-              printf(&quot;%d\n&quot;,ret);
+              <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">ret</span><span class="ss">)</span><span class="c1">;</span>
        }
-       return 0;
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
+线段树功能:query:区间求最大值的位子(直接把update的操作在query里做了)
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
 
-<p>线段树功能:query:区间求最大值的位子(直接把update的操作在query里做了)</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
-const int maxn = 222222;
-int h , w , n;
-int MAX[maxn&lt;&lt;2];
-void PushUP(int rt) {
-       MAX[rt] = max(MAX[rt&lt;&lt;1] , MAX[rt&lt;&lt;1|1]);
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">222222</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">h</span> , <span class="nv">w</span> , <span class="nv">n</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">MAX</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">MAX</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">max</span><span class="ss">(</span><span class="nv">MAX</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] , <span class="nv">MAX</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="ss">)</span><span class="c1">;</span>
 }
-void build(int l,int r,int rt) {
-       MAX[rt] = w;
-       if (l == r) return ;
-       int m = (l + r) &gt;&gt; 1;
-       build(lson);
-       build(rson);
+<span class="nv">void</span> <span class="nv">build</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">MAX</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">w</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="k">return</span> <span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
 }
-int query(int x,int l,int r,int rt) {
-       if (l == r) {
-              MAX[rt] -= x;
-              return l;
+<span class="nv">int</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">x</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">MAX</span>[<span class="nv">rt</span>] <span class="o">-=</span> <span class="nv">x</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="nv">l</span><span class="c1">;</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       int ret = (MAX[rt&lt;&lt;1] &gt;= x) ? query(x , lson) : query(x , rson);
-       PushUP(rt);
-       return ret;
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">ret</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">MAX</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">&gt;=</span> <span class="nv">x</span><span class="ss">)</span> ? <span class="nv">query</span><span class="ss">(</span><span class="nv">x</span> , <span class="nv">lson</span><span class="ss">)</span> : <span class="nv">query</span><span class="ss">(</span><span class="nv">x</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">return</span> <span class="nv">ret</span><span class="c1">;</span>
 }
-int main() {
-       while (~scanf(&quot;%d%d%d&quot;,&amp;h,&amp;w,&amp;n)) {
-              if (h &gt; n) h = n;
-              build(1 , h , 1);
-              while (n --) {
-                     int x;
-                     scanf(&quot;%d&quot;,&amp;x);
-                     if (MAX[1] &lt; x) puts(&quot;-1&quot;);
-                     else printf(&quot;%d\n&quot;,query(x , 1 , h , 1));
-              }
-       }
-       return 0;
-}
-</code></pre>
-
-<p>线段树功能:update:成段替换 (由于只query一次总区间,所以可以直接输出1结点的信息)</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
-const int maxn = 111111;
-int h , w , n;
-int col[maxn&lt;&lt;2];
-int sum[maxn&lt;&lt;2];
-void PushUp(int rt) {
-       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
-}
-void PushDown(int rt,int m) {
-       if (col[rt]) {
-              col[rt&lt;&lt;1] = col[rt&lt;&lt;1|1] = col[rt];
-              sum[rt&lt;&lt;1] = (m - (m &gt;&gt; 1)) * col[rt];
-              sum[rt&lt;&lt;1|1] = (m &gt;&gt; 1) * col[rt];
-              col[rt] = 0;
-       }
-}
-void build(int l,int r,int rt) {
-       col[rt] = 0;
-       sum[rt] = 1;
-       if (l == r) return ;
-       int m = (l + r) &gt;&gt; 1;
-       build(lson);
-       build(rson);
-       PushUp(rt);
-}
-void update(int L,int R,int c,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              col[rt] = c;
-              sum[rt] = c * (r - l + 1);
-              return ;
-       }
-       PushDown(rt , r - l + 1);
-       int m = (l + r) &gt;&gt; 1;
-       if (L &lt;= m) update(L , R , c , lson);
-       if (R &gt; m) update(L , R , c , rson);
-       PushUp(rt);
-}
-int main() {
-       int T , n , m;
-       scanf(&quot;%d&quot;,&amp;T);
-       for (int cas = 1 ; cas &lt;= T ; cas ++) {
-              scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-              build(1 , n , 1);
-              while (m --) {
-                     int a , b , c;
-                     scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
-                     update(a , b , c , 1 , n , 1);
-              }
-              printf(&quot;Case %d: The total value of the hook is %d.\n&quot;,cas , sum[1]);
-       }
-       return 0;
-}
-</code></pre>
-
-<p>线段树功能:update:成段增减 query:区间求和</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
-#define LL long long
-const int maxn = 111111;
-LL add[maxn&lt;&lt;2];
-LL sum[maxn&lt;&lt;2];
-void PushUp(int rt) {
-       sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
-}
-void PushDown(int rt,int m) {
-       if (add[rt]) {
-              add[rt&lt;&lt;1] += add[rt];
-              add[rt&lt;&lt;1|1] += add[rt];
-              sum[rt&lt;&lt;1] += add[rt] * (m - (m &gt;&gt; 1));
-              sum[rt&lt;&lt;1|1] += add[rt] * (m &gt;&gt; 1);
-              add[rt] = 0;
-       }
-}
-void build(int l,int r,int rt) {
-       add[rt] = 0;
-       if (l == r) {
-              scanf(&quot;%lld&quot;,&amp;sum[rt]);
-              return ;
-       }
-       int m = (l + r) &gt;&gt; 1;
-       build(lson);
-       build(rson);
-       PushUp(rt);
-}
-void update(int L,int R,int c,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              add[rt] += c;
-              sum[rt] += (LL)c * (r - l + 1);
-              return ;
-       }
-       PushDown(rt , r - l + 1);
-       int m = (l + r) &gt;&gt; 1;
-       if (L &lt;= m) update(L , R , c , lson);
-       if (m &lt; R) update(L , R , c , rson);
-       PushUp(rt);
-}
-LL query(int L,int R,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              return sum[rt];
-       }
-       PushDown(rt , r - l + 1);
-       int m = (l + r) &gt;&gt; 1;
-       LL ret = 0;
-       if (L &lt;= m) ret += query(L , R , lson);
-       if (m &lt; R) ret += query(L , R , rson);
-       return ret;
-}
-int main() {
-       int N , Q;
-       scanf(&quot;%d%d&quot;,&amp;N,&amp;Q);
-       build(1 , N , 1);
-       while (Q --) {
-              char op[2];
-              int a , b , c;
-              scanf(&quot;%s&quot;,op);
-              if (op[0] == 'Q') {
-                     scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
-                     printf(&quot;%lld\n&quot;,query(a , b , 1 , N , 1));
-              } else {
-                     scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
-                     update(a , b , c , 1 , N , 1);
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="k">while</span> <span class="ss">(</span><span class="o">~</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">h</span>,<span class="o">&amp;</span><span class="nv">w</span>,<span class="o">&amp;</span><span class="nv">n</span><span class="ss">))</span> {
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">h</span> <span class="o">&gt;</span> <span class="nv">n</span><span class="ss">)</span> <span class="nv">h</span> <span class="o">=</span> <span class="nv">n</span><span class="c1">;</span>
+              <span class="nv">build</span><span class="ss">(</span><span class="mi">1</span> , <span class="nv">h</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">while</span> <span class="ss">(</span><span class="nv">n</span> <span class="o">--</span><span class="ss">)</span> {
+                     <span class="nv">int</span> <span class="nv">x</span><span class="c1">;</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">x</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">MAX</span>[<span class="mi">1</span>] <span class="o">&lt;</span> <span class="nv">x</span><span class="ss">)</span> <span class="nv">puts</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">-1</span><span class="s2">&quot;</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="k">else</span> <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">query</span><span class="ss">(</span><span class="nv">x</span> , <span class="mi">1</span> , <span class="nv">h</span> , <span class="mi">1</span><span class="ss">))</span><span class="c1">;</span>
               }
        }
-       return 0;
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
+线段树功能:update:成段替换 (由于只query一次总区间,所以可以直接输出1结点的信息)
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
 
-<p>线段树功能:update:成段替换 query:简单hash</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;cstring&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">111111</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">h</span> , <span class="nv">w</span> , <span class="nv">n</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">col</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">sum</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+}
+<span class="nv">void</span> <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span>,<span class="nv">int</span> <span class="nv">m</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">col</span>[<span class="nv">rt</span>]<span class="ss">)</span> {
+              <span class="nv">col</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">col</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">col</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">-</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">))</span> <span class="o">*</span> <span class="nv">col</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">)</span> <span class="o">*</span> <span class="nv">col</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">col</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       }
+}
+<span class="nv">void</span> <span class="nv">build</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">col</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="k">return</span> <span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+}
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="nv">col</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">c</span><span class="c1">;</span>
+              <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">c</span> <span class="o">*</span> <span class="ss">(</span><span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
+       }
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">R</span> <span class="o">&gt;</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+}
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">T</span> , <span class="nv">n</span> , <span class="nv">m</span><span class="c1">;</span>
+       <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">T</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">cas</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">; cas &lt;= T ; cas ++) {</span>
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span>,<span class="o">&amp;</span><span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">build</span><span class="ss">(</span><span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">while</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">--</span><span class="ss">)</span> {
+                     <span class="nv">int</span> <span class="nv">a</span> , <span class="nv">b</span> , <span class="nv">c</span><span class="c1">;</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span>,<span class="o">&amp;</span><span class="nv">c</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">update</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">b</span> , <span class="nv">c</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              }
+              <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Case %d: The total value of the hook is %d.</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">cas</span> , <span class="nv">sum</span>[<span class="mi">1</span>]<span class="ss">)</span><span class="c1">;</span>
+       }
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
+}
+</pre></div>
+</td></tr></table>
+线段树功能:update:成段增减 query:区间求和
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
 
-const int maxn = 11111;
-bool hash[maxn];
-int li[maxn] , ri[maxn];
-int X[maxn*3];
-int col[maxn&lt;&lt;4];
-int cnt;
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">LL</span> <span class="nv">long</span> <span class="nv">long</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">111111</span><span class="c1">;</span>
+<span class="nv">LL</span> <span class="nv">add</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">LL</span> <span class="nv">sum</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+}
+<span class="nv">void</span> <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span>,<span class="nv">int</span> <span class="nv">m</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">add</span>[<span class="nv">rt</span>]<span class="ss">)</span> {
+              <span class="nv">add</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+=</span> <span class="nv">add</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">add</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">+=</span> <span class="nv">add</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+=</span> <span class="nv">add</span>[<span class="nv">rt</span>] <span class="o">*</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">-</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">))</span><span class="c1">;</span>
+              <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">+=</span> <span class="nv">add</span>[<span class="nv">rt</span>] <span class="o">*</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">add</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       }
+}
+<span class="nv">void</span> <span class="nv">build</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">add</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%lld</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">sum</span>[<span class="nv">rt</span>]<span class="ss">)</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
+       }
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+}
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="nv">add</span>[<span class="nv">rt</span>] <span class="o">+=</span> <span class="nv">c</span><span class="c1">;</span>
+              <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">+=</span> <span class="ss">(</span><span class="nv">LL</span><span class="ss">)</span><span class="nv">c</span> <span class="o">*</span> <span class="ss">(</span><span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
+       }
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&lt;</span> <span class="nv">R</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+}
+<span class="nv">LL</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="k">return</span> <span class="nv">sum</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+       }
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">LL</span> <span class="nv">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&lt;</span> <span class="nv">R</span><span class="ss">)</span> <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">return</span> <span class="nv">ret</span><span class="c1">;</span>
+}
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">N</span> , <span class="nv">Q</span><span class="c1">;</span>
+       <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">N</span>,<span class="o">&amp;</span><span class="nv">Q</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="mi">1</span> , <span class="nv">N</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="nv">Q</span> <span class="o">--</span><span class="ss">)</span> {
+              <span class="nv">char</span> <span class="nv">op</span>[<span class="mi">2</span>]<span class="c1">;</span>
+              <span class="nv">int</span> <span class="nv">a</span> , <span class="nv">b</span> , <span class="nv">c</span><span class="c1">;</span>
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%s</span><span class="s2">&quot;</span>,<span class="nv">op</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span>[<span class="mi">0</span>] <span class="o">==</span> <span class="s1">&#39;</span><span class="s">Q</span><span class="s1">&#39;</span><span class="ss">)</span> {
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%lld</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">query</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">b</span> , <span class="mi">1</span> , <span class="nv">N</span> , <span class="mi">1</span><span class="ss">))</span><span class="c1">;</span>
+              } <span class="k">else</span> {
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span>,<span class="o">&amp;</span><span class="nv">c</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">update</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">b</span> , <span class="nv">c</span> , <span class="mi">1</span> , <span class="nv">N</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              }
+       }
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
+}
+</pre></div>
+</td></tr></table>
+线段树功能:update:成段替换 query:简单hash
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
 
-void PushDown(int rt) {
-       if (col[rt] != -1) {
-              col[rt&lt;&lt;1] = col[rt&lt;&lt;1|1] = col[rt];
-              col[rt] = -1;
-       }
-}
-void update(int L,int R,int c,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              col[rt] = c;
-              return ;
-       }
-       PushDown(rt);
-       int m = (l + r) &gt;&gt; 1;
-       if (L &lt;= m) update(L , R , c , lson);
-       if (m &lt; R) update(L , R , c , rson);
-}
-void query(int l,int r,int rt) {
-       if (col[rt] != -1) {
-              if (!hash[col[rt]]) cnt ++;
-              hash[ col[rt] ] = true;
-              return ;
-       }
-       if (l == r) return ;
-       int m = (l + r) &gt;&gt; 1;
-       query(lson);
-       query(rson);
-}
-int Bin(int key,int n,int X[]) {
-       int l = 0 , r = n - 1;
-       while (l &lt;= r) {
-              int m = (l + r) &gt;&gt; 1;
-              if (X[m] == key) return m;
-              if (X[m] &lt; key) l = m + 1;
-              else r = m - 1;
-       }
-       return -1;
-}
-int main() {
-       int T , n;
-       scanf(&quot;%d&quot;,&amp;T);
-       while (T --) {
-              scanf(&quot;%d&quot;,&amp;n);
-              int nn = 0;
-              for (int i = 0 ; i &lt; n ; i ++) {
-                     scanf(&quot;%d%d&quot;,&amp;li[i] , &amp;ri[i]);
-                     X[nn++] = li[i];
-                     X[nn++] = ri[i];
-              }
-              sort(X , X + nn);
-              int m = 1;
-              for (int i = 1 ; i &lt; nn; i ++) {
-                     if (X[i] != X[i-1]) X[m ++] = X[i];
-              }
-              for (int i = m - 1 ; i &gt; 0 ; i --) {
-                     if (X[i] != X[i-1] + 1) X[m ++] = X[i] + 1;
-              }
-              sort(X , X + m);
-              memset(col , -1 , sizeof(col));
-              for (int i = 0 ; i &lt; n ; i ++) {
-                     int l = Bin(li[i] , m , X);
-                     int r = Bin(ri[i] , m , X);
-                     update(l , r , i , 0 , m , 1);
-              }
-              cnt = 0;
-              memset(hash , false , sizeof(hash));
-              query(0 , m , 1);
-              printf(&quot;%d\n&quot;,cnt);
-       }
-       return 0;
-}
-</code></pre>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">11111</span><span class="c1">;</span>
+<span class="nv">bool</span> <span class="nv">hash</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">li</span>[<span class="nv">maxn</span>] , <span class="nv">ri</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">X</span>[<span class="nv">maxn</span><span class="o">*</span><span class="mi">3</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">col</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">4</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">cnt</span><span class="c1">;</span>
 
-<p>线段树功能:update:成段替换,区间异或 query:简单hash</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;cstring&gt;
-#include &lt;cctype&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+<span class="nv">void</span> <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">col</span>[<span class="nv">rt</span>] <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="ss">)</span> {
+              <span class="nv">col</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">col</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">col</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">col</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="c1">;</span>
+       }
+}
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="nv">col</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">c</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
+       }
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&lt;</span> <span class="nv">R</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+}
+<span class="nv">void</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">col</span>[<span class="nv">rt</span>] <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="ss">)</span> {
+              <span class="k">if</span> <span class="ss">(</span><span class="o">!</span><span class="nv">hash</span>[<span class="nv">col</span>[<span class="nv">rt</span>]]<span class="ss">)</span> <span class="nv">cnt</span> <span class="o">++</span><span class="c1">;</span>
+              <span class="nv">hash</span>[ <span class="nv">col</span>[<span class="nv">rt</span>] ] <span class="o">=</span> <span class="nv">true</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
+       }
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="k">return</span> <span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">query</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">query</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+}
+<span class="nv">int</span> <span class="nv">Bin</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">key</span>,<span class="nv">int</span> <span class="nv">n</span>,<span class="nv">int</span> <span class="nv">X</span>[]<span class="ss">)</span> {
+       <span class="nv">int</span> <span class="nv">l</span> <span class="o">=</span> <span class="mi">0</span> , <span class="nv">r</span> <span class="o">=</span> <span class="nv">n</span> <span class="o">-</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">&lt;=</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">X</span>[<span class="nv">m</span>] <span class="o">==</span> <span class="nv">key</span><span class="ss">)</span> <span class="k">return</span> <span class="nv">m</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">X</span>[<span class="nv">m</span>] <span class="o">&lt;</span> <span class="nv">key</span><span class="ss">)</span> <span class="nv">l</span> <span class="o">=</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="k">else</span> <span class="nv">r</span> <span class="o">=</span> <span class="nv">m</span> <span class="o">-</span> <span class="mi">1</span><span class="c1">;</span>
+       }
+       <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="c1">;</span>
+}
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">T</span> , <span class="nv">n</span><span class="c1">;</span>
+       <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">T</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="nv">T</span> <span class="o">--</span><span class="ss">)</span> {
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">int</span> <span class="nv">nn</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt; n ; i ++) {</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">li</span>[<span class="nv">i</span>] , <span class="o">&amp;</span><span class="nv">ri</span>[<span class="nv">i</span>]<span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">X</span>[<span class="nv">nn</span><span class="o">++</span>] <span class="o">=</span> <span class="nv">li</span>[<span class="nv">i</span>]<span class="c1">;</span>
+                     <span class="nv">X</span>[<span class="nv">nn</span><span class="o">++</span>] <span class="o">=</span> <span class="nv">ri</span>[<span class="nv">i</span>]<span class="c1">;</span>
+              }
+              <span class="nv">sort</span><span class="ss">(</span><span class="nv">X</span> , <span class="nv">X</span> <span class="o">+</span> <span class="nv">nn</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">; i &lt; nn; i ++) {</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">X</span>[<span class="nv">i</span>] <span class="o">!=</span> <span class="nv">X</span>[<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]<span class="ss">)</span> <span class="nv">X</span>[<span class="nv">m</span> <span class="o">++</span>] <span class="o">=</span> <span class="nv">X</span>[<span class="nv">i</span>]<span class="c1">;</span>
+              }
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="nv">m</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1">; i &gt; 0 ; i --) {</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">X</span>[<span class="nv">i</span>] <span class="o">!=</span> <span class="nv">X</span>[<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>] <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span> <span class="nv">X</span>[<span class="nv">m</span> <span class="o">++</span>] <span class="o">=</span> <span class="nv">X</span>[<span class="nv">i</span>] <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+              }
+              <span class="nv">sort</span><span class="ss">(</span><span class="nv">X</span> , <span class="nv">X</span> <span class="o">+</span> <span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">memset</span><span class="ss">(</span><span class="nv">col</span> , <span class="o">-</span><span class="mi">1</span> , <span class="nv">sizeof</span><span class="ss">(</span><span class="nv">col</span><span class="ss">))</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt; n ; i ++) {</span>
+                     <span class="nv">int</span> <span class="nv">l</span> <span class="o">=</span> <span class="nv">Bin</span><span class="ss">(</span><span class="nv">li</span>[<span class="nv">i</span>] , <span class="nv">m</span> , <span class="nv">X</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">int</span> <span class="nv">r</span> <span class="o">=</span> <span class="nv">Bin</span><span class="ss">(</span><span class="nv">ri</span>[<span class="nv">i</span>] , <span class="nv">m</span> , <span class="nv">X</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">update</span><span class="ss">(</span><span class="nv">l</span> , <span class="nv">r</span> , <span class="nv">i</span> , <span class="mi">0</span> , <span class="nv">m</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              }
+              <span class="nv">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="nv">memset</span><span class="ss">(</span><span class="nv">hash</span> , <span class="nv">false</span> , <span class="nv">sizeof</span><span class="ss">(</span><span class="nv">hash</span><span class="ss">))</span><span class="c1">;</span>
+              <span class="nv">query</span><span class="ss">(</span><span class="mi">0</span> , <span class="nv">m</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">cnt</span><span class="ss">)</span><span class="c1">;</span>
+       }
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
+}
+</pre></div>
+</td></tr></table>
+线段树功能:update:成段替换,区间异或 query:简单hash
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cctype</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
 
-const int maxn = 131072;
-bool hash[maxn];
-int cover[maxn&lt;&lt;2];
-int XOR[maxn&lt;&lt;2];
-void FXOR(int rt) {
-       if (cover[rt] != -1) cover[rt] ^= 1;
-       else XOR[rt] ^= 1;
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">131072</span><span class="c1">;</span>
+<span class="nv">bool</span> <span class="nv">hash</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">cover</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">XOR</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">FXOR</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="ss">)</span> <span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">^=</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="nv">XOR</span>[<span class="nv">rt</span>] <span class="o">^=</span> <span class="mi">1</span><span class="c1">;</span>
 }
-void PushDown(int rt) {
-       if (cover[rt] != -1) {
-              cover[rt&lt;&lt;1] = cover[rt&lt;&lt;1|1] = cover[rt];
-              XOR[rt&lt;&lt;1] = XOR[rt&lt;&lt;1|1] = 0;
-              cover[rt] = -1;
+<span class="nv">void</span> <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="ss">)</span> {
+              <span class="nv">cover</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">XOR</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">XOR</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="c1">;</span>
        }
-       if (XOR[rt]) {
-              FXOR(rt&lt;&lt;1);
-              FXOR(rt&lt;&lt;1|1);
-              XOR[rt] = 0;
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">XOR</span>[<span class="nv">rt</span>]<span class="ss">)</span> {
+              <span class="nv">FXOR</span><span class="ss">(</span><span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">FXOR</span><span class="ss">(</span><span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">XOR</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
        }
 }
-void update(char op,int L,int R,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              if (op == 'U') {
-                     cover[rt] = 1;
-                     XOR[rt] = 0;
-              } else if (op == 'D') {
-                     cover[rt] = 0;
-                     XOR[rt] = 0;
-              } else if (op == 'C' || op == 'S') {
-                     FXOR(rt);
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">char</span> <span class="nv">op</span>,<span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">U</span><span class="s1">&#39;</span><span class="ss">)</span> {
+                     <span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
+                     <span class="nv">XOR</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              } <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">D</span><span class="s1">&#39;</span><span class="ss">)</span> {
+                     <span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+                     <span class="nv">XOR</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              } <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">C</span><span class="s1">&#39;</span> <span class="o">||</span> <span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">S</span><span class="s1">&#39;</span><span class="ss">)</span> {
+                     <span class="nv">FXOR</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
               }
-              return ;
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       PushDown(rt);
-       int m = (l + r) &gt;&gt; 1;
-       if (L &lt;= m) update(op , L , R , lson);
-       else if (op == 'I' || op == 'C') {
-              XOR[rt&lt;&lt;1] = cover[rt&lt;&lt;1] = 0;
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">op</span> , <span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">I</span><span class="s1">&#39;</span> <span class="o">||</span> <span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">C</span><span class="s1">&#39;</span><span class="ss">)</span> {
+              <span class="nv">XOR</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
        }
-       if (m &lt; R) update(op , L , R , rson);
-       else if (op == 'I' || op == 'C') {
-              XOR[rt&lt;&lt;1|1] = cover[rt&lt;&lt;1|1] = 0;
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&lt;</span> <span class="nv">R</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">op</span> , <span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">I</span><span class="s1">&#39;</span> <span class="o">||</span> <span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">C</span><span class="s1">&#39;</span><span class="ss">)</span> {
+              <span class="nv">XOR</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
        }
 }
-void query(int l,int r,int rt) {
-       if (cover[rt] == 1) {
-              for (int it = l ; it &lt;= r ; it ++) {
-                     hash[it] = true;
+<span class="nv">void</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">==</span> <span class="mi">1</span><span class="ss">)</span> {
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">it</span> <span class="o">=</span> <span class="nv">l</span> <span class="c1">; it &lt;= r ; it ++) {</span>
+                     <span class="nv">hash</span>[<span class="nv">it</span>] <span class="o">=</span> <span class="nv">true</span><span class="c1">;</span>
               }
-              return ;
-       } else if (cover[rt] == 0) return ;
-       if (l == r) return ;
-       PushDown(rt);
-       int m = (l + r) &gt;&gt; 1;
-       query(lson);
-       query(rson);
+              <span class="k">return</span> <span class="c1">;</span>
+       } <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">==</span> <span class="mi">0</span><span class="ss">)</span> <span class="k">return</span> <span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="k">return</span> <span class="c1">;</span>
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">query</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">query</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
 }
-int main() {
-       cover[1] = XOR[1] = 0;
-       char op , l , r;
-       int a , b;
-       while ( ~scanf(&quot;%c %c%d,%d%c\n&quot;,&amp;op , &amp;l , &amp;a , &amp;b , &amp;r) ) {
-              a &lt;&lt;= 1 , b &lt;&lt;= 1;
-              if (l == '(') a ++;
-              if (r == ')') b --;
-              if (a &gt; b) {
-                     if (op == 'C' || op == 'I') {
-                            cover[1] = XOR[1] = 0;
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">cover</span>[<span class="mi">1</span>] <span class="o">=</span> <span class="nv">XOR</span>[<span class="mi">1</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="nv">char</span> <span class="nv">op</span> , <span class="nv">l</span> , <span class="nv">r</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">a</span> , <span class="nv">b</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span> <span class="o">~</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%c %c%d,%d%c</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">op</span> , <span class="o">&amp;</span><span class="nv">l</span> , <span class="o">&amp;</span><span class="nv">a</span> , <span class="o">&amp;</span><span class="nv">b</span> , <span class="o">&amp;</span><span class="nv">r</span><span class="ss">)</span> <span class="ss">)</span> {
+              <span class="nv">a</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span> , <span class="nv">b</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">(</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">a</span> <span class="o">++</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">r</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">)</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">b</span> <span class="o">--</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">a</span> <span class="o">&gt;</span> <span class="nv">b</span><span class="ss">)</span> {
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">C</span><span class="s1">&#39;</span> <span class="o">||</span> <span class="nv">op</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="s">I</span><span class="s1">&#39;</span><span class="ss">)</span> {
+                            <span class="nv">cover</span>[<span class="mi">1</span>] <span class="o">=</span> <span class="nv">XOR</span>[<span class="mi">1</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
                      }
-              } else update(op , a , b , 0 , maxn , 1);
+              } <span class="k">else</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">op</span> , <span class="nv">a</span> , <span class="nv">b</span> , <span class="mi">0</span> , <span class="nv">maxn</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
        }
-       query(0 , maxn , 1);
-       bool flag = false;
-       int s = -1 , e;
-       for (int i = 0 ; i &lt;= maxn ; i ++) {
-              if (hash[i]) {
-                     if (s == -1) s = i;
-                     e = i;
-              } else {
-                     if (s != -1) {
-                            if (flag) printf(&quot; &quot;);
-                            flag = true;
-                            printf(&quot;%c%d,%d%c&quot;,s&amp;1?'(':'[' , s&gt;&gt;1 , (e+1)&gt;&gt;1 , e&amp;1?')':']');
-                            s = -1;
+       <span class="nv">query</span><span class="ss">(</span><span class="mi">0</span> , <span class="nv">maxn</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">bool</span> <span class="nv">flag</span> <span class="o">=</span> <span class="nv">false</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">s</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> , <span class="nv">e</span><span class="c1">;</span>
+       <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt;= maxn ; i ++) {</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">hash</span>[<span class="nv">i</span>]<span class="ss">)</span> {
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">s</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="ss">)</span> <span class="nv">s</span> <span class="o">=</span> <span class="nv">i</span><span class="c1">;</span>
+                     <span class="nv">e</span> <span class="o">=</span> <span class="nv">i</span><span class="c1">;</span>
+              } <span class="k">else</span> {
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">s</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="ss">)</span> {
+                            <span class="k">if</span> <span class="ss">(</span><span class="nv">flag</span><span class="ss">)</span> <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s"> </span><span class="s2">&quot;</span><span class="ss">)</span><span class="c1">;</span>
+                            <span class="nv">flag</span> <span class="o">=</span> <span class="nv">true</span><span class="c1">;</span>
+                            <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%c%d,%d%c</span><span class="s2">&quot;</span>,<span class="nv">s</span><span class="o">&amp;</span><span class="mi">1</span>?<span class="s1">&#39;</span><span class="s">(</span><span class="s1">&#39;</span>:<span class="s1">&#39;</span><span class="s">[</span><span class="s1">&#39;</span> , <span class="nv">s</span><span class="o">&gt;&gt;</span><span class="mi">1</span> , <span class="ss">(</span><span class="nv">e</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="o">&gt;&gt;</span><span class="mi">1</span> , <span class="nv">e</span><span class="o">&amp;</span><span class="mi">1</span>?<span class="s1">&#39;</span><span class="s">)</span><span class="s1">&#39;</span>:<span class="s1">&#39;</span><span class="s">]</span><span class="s1">&#39;</span><span class="ss">)</span><span class="c1">;</span>
+                            <span class="nv">s</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="c1">;</span>
                      }
               }
        }
-       if (!flag) printf(&quot;empty set&quot;);
-       puts(&quot;&quot;);
-       return 0;
+       <span class="k">if</span> <span class="ss">(</span><span class="o">!</span><span class="nv">flag</span><span class="ss">)</span> <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">empty set</span><span class="s2">&quot;</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">puts</span><span class="ss">(</span><span class="s2">&quot;&quot;</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
+线段树操作:update:区间替换 query:询问满足条件的最左断点
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cctype</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
 
-<p>线段树操作:update:区间替换 query:询问满足条件的最左断点</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;cstring&gt;
-#include &lt;cctype&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">55555</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">lsum</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>] , <span class="nv">rsum</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>] , <span class="nv">msum</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">cover</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
 
-const int maxn = 55555;
-int lsum[maxn&lt;&lt;2] , rsum[maxn&lt;&lt;2] , msum[maxn&lt;&lt;2];
-int cover[maxn&lt;&lt;2];
-
-void PushDown(int rt,int m) {
-       if (cover[rt] != -1) {
-              cover[rt&lt;&lt;1] = cover[rt&lt;&lt;1|1] = cover[rt];
-              msum[rt&lt;&lt;1] = lsum[rt&lt;&lt;1] = rsum[rt&lt;&lt;1] = cover[rt] ? 0 : m - (m &gt;&gt; 1);
-              msum[rt&lt;&lt;1|1] = lsum[rt&lt;&lt;1|1] = rsum[rt&lt;&lt;1|1] = cover[rt] ? 0 : (m &gt;&gt; 1);
-              cover[rt] = -1;
+<span class="nv">void</span> <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span>,<span class="nv">int</span> <span class="nv">m</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="ss">)</span> {
+              <span class="nv">cover</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span>]<span class="c1">;</span>
+              <span class="nv">msum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">lsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">rsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span>] ? <span class="mi">0</span> : <span class="nv">m</span> <span class="o">-</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">msum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">lsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">rsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">=</span> <span class="nv">cover</span>[<span class="nv">rt</span>] ? <span class="mi">0</span> : <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="c1">;</span>
        }
 }
-void PushUp(int rt,int m) {
-       lsum[rt] = lsum[rt&lt;&lt;1];
-       rsum[rt] = rsum[rt&lt;&lt;1|1];
-       if (lsum[rt] == m - (m &gt;&gt; 1)) lsum[rt] += lsum[rt&lt;&lt;1|1];
-       if (rsum[rt] == (m &gt;&gt; 1)) rsum[rt] += rsum[rt&lt;&lt;1];
-       msum[rt] = max(lsum[rt&lt;&lt;1|1] + rsum[rt&lt;&lt;1] , max(msum[rt&lt;&lt;1] , msum[rt&lt;&lt;1|1]));
+<span class="nv">void</span> <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span>,<span class="nv">int</span> <span class="nv">m</span><span class="ss">)</span> {
+       <span class="nv">lsum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">lsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>]<span class="c1">;</span>
+       <span class="nv">rsum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">rsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">lsum</span>[<span class="nv">rt</span>] <span class="o">==</span> <span class="nv">m</span> <span class="o">-</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">))</span> <span class="nv">lsum</span>[<span class="nv">rt</span>] <span class="o">+=</span> <span class="nv">lsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">rsum</span>[<span class="nv">rt</span>] <span class="o">==</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="ss">))</span> <span class="nv">rsum</span>[<span class="nv">rt</span>] <span class="o">+=</span> <span class="nv">rsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>]<span class="c1">;</span>
+       <span class="nv">msum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">max</span><span class="ss">(</span><span class="nv">lsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">rsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] , <span class="nv">max</span><span class="ss">(</span><span class="nv">msum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] , <span class="nv">msum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="ss">))</span><span class="c1">;</span>
 }
-void build(int l,int r,int rt) {
-       msum[rt] = lsum[rt] = rsum[rt] = r - l + 1;
-       cover[rt] = -1;
-       if (l == r) return ;
-       int m = (l + r) &gt;&gt; 1;
-       build(lson);
-       build(rson);
+<span class="nv">void</span> <span class="nv">build</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="nv">msum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">lsum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">rsum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="k">return</span> <span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
 }
-void update(int L,int R,int c,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              msum[rt] = lsum[rt] = rsum[rt] = c ? 0 : r - l + 1;
-              cover[rt] = c;
-              return ;
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="nv">msum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">lsum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">rsum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">c</span> ? <span class="mi">0</span> : <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="nv">cover</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">c</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       PushDown(rt , r - l + 1);
-       int m = (l + r) &gt;&gt; 1;
-       if (L &lt;= m) update(L , R , c , lson);
-       if (m &lt; R) update(L , R , c , rson);
-       PushUp(rt , r - l + 1);
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&lt;</span> <span class="nv">R</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
 }
-int query(int w,int l,int r,int rt) {
-       if (l == r) return l;
-       PushDown(rt , r - l + 1);
-       int m = (l + r) &gt;&gt; 1;
-       if (msum[rt&lt;&lt;1] &gt;= w) return query(w , lson);
-       else if (rsum[rt&lt;&lt;1] + lsum[rt&lt;&lt;1|1] &gt;= w) return m - rsum[rt&lt;&lt;1] + 1;
-       return query(w , rson);
+<span class="nv">int</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">w</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="k">return</span> <span class="nv">l</span><span class="c1">;</span>
+       <span class="nv">PushDown</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">msum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">&gt;=</span> <span class="nv">w</span><span class="ss">)</span> <span class="k">return</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">w</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">rsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">lsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">&gt;=</span> <span class="nv">w</span><span class="ss">)</span> <span class="k">return</span> <span class="nv">m</span> <span class="o">-</span> <span class="nv">rsum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">return</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">w</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
 }
-int main() {
-       int n , m;
-       scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-       build(1 , n , 1);
-       while (m --) {
-              int op , a , b;
-              scanf(&quot;%d&quot;,&amp;op);
-              if (op == 1) {
-                     scanf(&quot;%d&quot;,&amp;a);
-                     if (msum[1] &lt; a) puts(&quot;0&quot;);
-                     else {
-                            int p = query(a , 1 , n , 1);
-                            printf(&quot;%d\n&quot;,p);
-                            update(p , p + a - 1 , 1 , 1 , n , 1);
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">n</span> , <span class="nv">m</span><span class="c1">;</span>
+       <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span>,<span class="o">&amp;</span><span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">build</span><span class="ss">(</span><span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">--</span><span class="ss">)</span> {
+              <span class="nv">int</span> <span class="nv">op</span> , <span class="nv">a</span> , <span class="nv">b</span><span class="c1">;</span>
+              <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">op</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">op</span> <span class="o">==</span> <span class="mi">1</span><span class="ss">)</span> {
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">msum</span>[<span class="mi">1</span>] <span class="o">&lt;</span> <span class="nv">a</span><span class="ss">)</span> <span class="nv">puts</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">0</span><span class="s2">&quot;</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="k">else</span> {
+                            <span class="nv">int</span> <span class="nv">p</span> <span class="o">=</span> <span class="nv">query</span><span class="ss">(</span><span class="nv">a</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+                            <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">p</span><span class="ss">)</span><span class="c1">;</span>
+                            <span class="nv">update</span><span class="ss">(</span><span class="nv">p</span> , <span class="nv">p</span> <span class="o">+</span> <span class="nv">a</span> <span class="o">-</span> <span class="mi">1</span> , <span class="mi">1</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
                      }
-              } else {
-                     scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
-                     update(a , a + b - 1 , 0 , 1 , n , 1);
+              } <span class="k">else</span> {
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">update</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">a</span> <span class="o">+</span> <span class="nv">b</span> <span class="o">-</span> <span class="mi">1</span> , <span class="mi">0</span> , <span class="mi">1</span> , <span class="nv">n</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
               }
        }
-       return 0;
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
+线段树操作:update:区间增减 query:直接取根节点的值
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cctype</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
 
-<p>线段树操作:update:区间增减 query:直接取根节点的值</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;cstring&gt;
-#include &lt;cctype&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">2222</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">cnt</span>[<span class="nv">maxn</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">double</span> <span class="nv">sum</span>[<span class="nv">maxn</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">double</span> <span class="nv">X</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">struct</span> <span class="nv">Seg</span> {
+       <span class="nv">double</span> <span class="nv">h</span> , <span class="nv">l</span> , <span class="nv">r</span><span class="c1">;</span>
+       <span class="nv">int</span> <span class="nv">s</span><span class="c1">;</span>
+       <span class="nv">Seg</span><span class="ss">()</span>{}
+       <span class="nv">Seg</span><span class="ss">(</span><span class="nv">double</span> <span class="nv">a</span>,<span class="nv">double</span> <span class="nv">b</span>,<span class="nv">double</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">d</span><span class="ss">)</span> : <span class="nv">l</span><span class="ss">(</span><span class="nv">a</span><span class="ss">)</span> , <span class="nv">r</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span> , <span class="nv">h</span><span class="ss">(</span><span class="nv">c</span><span class="ss">)</span> , <span class="nv">s</span><span class="ss">(</span><span class="nv">d</span><span class="ss">)</span> {}
+       <span class="nv">bool</span> <span class="nv">operator</span> <span class="o">&lt;</span> <span class="ss">(</span><span class="nv">const</span> <span class="nv">Seg</span> <span class="o">&amp;</span><span class="nv">cmp</span><span class="ss">)</span> <span class="nv">const</span> {
+              <span class="k">return</span> <span class="nv">h</span> <span class="o">&lt;</span> <span class="nv">cmp</span>.<span class="nv">h</span><span class="c1">;</span>
+       }
+}<span class="nv">ss</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">cnt</span>[<span class="nv">rt</span>]<span class="ss">)</span> <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">X</span>[<span class="nv">r</span><span class="o">+</span><span class="mi">1</span>] <span class="o">-</span> <span class="nv">X</span>[<span class="nv">l</span>]<span class="c1">;</span>
+       <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       <span class="k">else</span> <span class="nv">sum</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">sum</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+}
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="nv">cnt</span>[<span class="nv">rt</span>] <span class="o">+=</span> <span class="nv">c</span><span class="c1">;</span>
+              <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">l</span> , <span class="nv">r</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
+       }
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&lt;</span> <span class="nv">R</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUp</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">l</span> , <span class="nv">r</span><span class="ss">)</span><span class="c1">;</span>
+}
+<span class="nv">int</span> <span class="nv">Bin</span><span class="ss">(</span><span class="nv">double</span> <span class="nv">key</span>,<span class="nv">int</span> <span class="nv">n</span>,<span class="nv">double</span> <span class="nv">X</span>[]<span class="ss">)</span> {
+       <span class="nv">int</span> <span class="nv">l</span> <span class="o">=</span> <span class="mi">0</span> , <span class="nv">r</span> <span class="o">=</span> <span class="nv">n</span> <span class="o">-</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">&lt;=</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">X</span>[<span class="nv">m</span>] <span class="o">==</span> <span class="nv">key</span><span class="ss">)</span> <span class="k">return</span> <span class="nv">m</span><span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">X</span>[<span class="nv">m</span>] <span class="o">&lt;</span> <span class="nv">key</span><span class="ss">)</span> <span class="nv">l</span> <span class="o">=</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="k">else</span> <span class="nv">r</span> <span class="o">=</span> <span class="nv">m</span> <span class="o">-</span> <span class="mi">1</span><span class="c1">;</span>
+       }
+       <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="c1">;</span>
+}
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">n</span> , <span class="nv">cas</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="o">~</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span><span class="ss">)</span> <span class="o">&amp;&amp;</span> <span class="nv">n</span><span class="ss">)</span> {
+              <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="k">while</span> <span class="ss">(</span><span class="nv">n</span> <span class="o">--</span><span class="ss">)</span> {
+                     <span class="nv">double</span> <span class="nv">a</span> , <span class="nv">b</span> , <span class="nv">c</span> , <span class="nv">d</span><span class="c1">;</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%lf%lf%lf%lf</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span>,<span class="o">&amp;</span><span class="nv">c</span>,<span class="o">&amp;</span><span class="nv">d</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">X</span>[<span class="nv">m</span>] <span class="o">=</span> <span class="nv">a</span><span class="c1">;</span>
+                     <span class="nv">ss</span>[<span class="nv">m</span><span class="o">++</span>] <span class="o">=</span> <span class="nv">Seg</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">c</span> , <span class="nv">b</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">X</span>[<span class="nv">m</span>] <span class="o">=</span> <span class="nv">c</span><span class="c1">;</span>
+                     <span class="nv">ss</span>[<span class="nv">m</span><span class="o">++</span>] <span class="o">=</span> <span class="nv">Seg</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">c</span> , <span class="nv">d</span> , <span class="o">-</span><span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+              }
+              <span class="nv">sort</span><span class="ss">(</span><span class="nv">X</span> , <span class="nv">X</span> <span class="o">+</span> <span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">sort</span><span class="ss">(</span><span class="nv">ss</span> , <span class="nv">ss</span> <span class="o">+</span> <span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">int</span> <span class="nv">k</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">; i &lt; m ; i ++) {</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">X</span>[<span class="nv">i</span>] <span class="o">!=</span> <span class="nv">X</span>[<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]<span class="ss">)</span> <span class="nv">X</span>[<span class="nv">k</span><span class="o">++</span>] <span class="o">=</span> <span class="nv">X</span>[<span class="nv">i</span>]<span class="c1">;</span>
+              }
+              <span class="nv">memset</span><span class="ss">(</span><span class="nv">cnt</span> , <span class="mi">0</span> , <span class="nv">sizeof</span><span class="ss">(</span><span class="nv">cnt</span><span class="ss">))</span><span class="c1">;</span>
+              <span class="nv">memset</span><span class="ss">(</span><span class="nv">sum</span> , <span class="mi">0</span> , <span class="nv">sizeof</span><span class="ss">(</span><span class="nv">sum</span><span class="ss">))</span><span class="c1">;</span>
+              <span class="nv">double</span> <span class="nv">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt; m - 1 ; i ++) {</span>
+                     <span class="nv">int</span> <span class="nv">l</span> <span class="o">=</span> <span class="nv">Bin</span><span class="ss">(</span><span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">l</span> , <span class="nv">k</span> , <span class="nv">X</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">int</span> <span class="nv">r</span> <span class="o">=</span> <span class="nv">Bin</span><span class="ss">(</span><span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">r</span> , <span class="nv">k</span> , <span class="nv">X</span><span class="ss">)</span> <span class="o">-</span> <span class="mi">1</span><span class="c1">;</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">&lt;=</span> <span class="nv">r</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">l</span> , <span class="nv">r</span> , <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">s</span> , <span class="mi">0</span> , <span class="nv">k</span> <span class="o">-</span> <span class="mi">1</span>, <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">sum</span>[<span class="mi">1</span>] <span class="o">*</span> <span class="ss">(</span><span class="nv">ss</span>[<span class="nv">i</span><span class="o">+</span><span class="mi">1</span>].<span class="nv">h</span> <span class="o">-</span> <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">h</span><span class="ss">)</span><span class="c1">;</span>
+              }
+              <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Test case #%d</span><span class="se">\n</span><span class="s">Total explored area: %.2lf</span><span class="se">\n\n</span><span class="s2">&quot;</span>,<span class="nv">cas</span><span class="o">++</span> , <span class="nv">ret</span><span class="ss">)</span><span class="c1">;</span>
+       }
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
+}
+</pre></div>
+</td></tr></table>
+线段树操作:update:区间增减 query:直接取根节点的值
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cctype</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
+#<span class="nv">define</span> <span class="nv">lson</span> <span class="nv">l</span> , <span class="nv">m</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+#<span class="nv">define</span> <span class="nv">rson</span> <span class="nv">m</span> <span class="o">+</span> <span class="mi">1</span> , <span class="nv">r</span> , <span class="nv">rt</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">1</span>
 
-const int maxn = 2222;
-int cnt[maxn &lt;&lt; 2];
-double sum[maxn &lt;&lt; 2];
-double X[maxn];
-struct Seg {
-       double h , l , r;
-       int s;
-       Seg(){}
-       Seg(double a,double b,double c,int d) : l(a) , r(b) , h(c) , s(d) {}
-       bool operator &lt; (const Seg &amp;cmp) const {
-              return h &lt; cmp.h;
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">22222</span><span class="c1">;</span>
+<span class="nv">struct</span> <span class="nv">Seg</span>{
+       <span class="nv">int</span> <span class="nv">l</span> , <span class="nv">r</span> , <span class="nv">h</span> , <span class="nv">s</span><span class="c1">;</span>
+       <span class="nv">Seg</span><span class="ss">()</span> {}
+       <span class="nv">Seg</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">a</span>,<span class="nv">int</span> <span class="nv">b</span>,<span class="nv">int</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">d</span><span class="ss">)</span>:<span class="nv">l</span><span class="ss">(</span><span class="nv">a</span><span class="ss">)</span> , <span class="nv">r</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span> , <span class="nv">h</span><span class="ss">(</span><span class="nv">c</span><span class="ss">)</span> , <span class="nv">s</span><span class="ss">(</span><span class="nv">d</span><span class="ss">)</span> {}
+       <span class="nv">bool</span> <span class="nv">operator</span> <span class="o">&lt;</span> <span class="ss">(</span><span class="nv">const</span> <span class="nv">Seg</span> <span class="o">&amp;</span><span class="nv">cmp</span><span class="ss">)</span> <span class="nv">const</span> {
+              <span class="k">return</span> <span class="nv">h</span> <span class="o">&lt;</span> <span class="nv">cmp</span>.<span class="nv">h</span><span class="c1">;</span>
        }
-}ss[maxn];
-void PushUp(int rt,int l,int r) {
-       if (cnt[rt]) sum[rt] = X[r+1] - X[l];
-       else if (l == r) sum[rt] = 0;
-       else sum[rt] = sum[rt&lt;&lt;1] + sum[rt&lt;&lt;1|1];
-}
-void update(int L,int R,int c,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              cnt[rt] += c;
-              PushUp(rt , l , r);
-              return ;
+}<span class="nv">ss</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">bool</span> <span class="nv">lbd</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>] , <span class="nv">rbd</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">numseg</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">cnt</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">len</span>[<span class="nv">maxn</span><span class="o">&lt;&lt;</span><span class="mi">2</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">rt</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">cnt</span>[<span class="nv">rt</span>]<span class="ss">)</span> {
+              <span class="nv">lbd</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">rbd</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="nv">len</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">r</span> <span class="o">-</span> <span class="nv">l</span> <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+              <span class="nv">numseg</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">2</span><span class="c1">;</span>
+       } <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">==</span> <span class="nv">r</span><span class="ss">)</span> {
+              <span class="nv">len</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">numseg</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">lbd</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">rbd</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+       } <span class="k">else</span> {
+              <span class="nv">lbd</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">lbd</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>]<span class="c1">;</span>
+              <span class="nv">rbd</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">rbd</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+              <span class="nv">len</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">len</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">len</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+              <span class="nv">numseg</span>[<span class="nv">rt</span>] <span class="o">=</span> <span class="nv">numseg</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">numseg</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>]<span class="c1">;</span>
+              <span class="k">if</span> <span class="ss">(</span><span class="nv">lbd</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="o">|</span><span class="mi">1</span>] <span class="o">&amp;&amp;</span> <span class="nv">rbd</span>[<span class="nv">rt</span><span class="o">&lt;&lt;</span><span class="mi">1</span>]<span class="ss">)</span> <span class="nv">numseg</span>[<span class="nv">rt</span>] <span class="o">-=</span> <span class="mi">2</span><span class="c1">;//两条线重合</span>
        }
-       int m = (l + r) &gt;&gt; 1;
-       if (L &lt;= m) update(L , R , c , lson);
-       if (m &lt; R) update(L , R , c , rson);
-       PushUp(rt , l , r);
 }
-int Bin(double key,int n,double X[]) {
-       int l = 0 , r = n - 1;
-       while (l &lt;= r) {
-              int m = (l + r) &gt;&gt; 1;
-              if (X[m] == key) return m;
-              if (X[m] &lt; key) l = m + 1;
-              else r = m - 1;
+<span class="nv">void</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">L</span>,<span class="nv">int</span> <span class="nv">R</span>,<span class="nv">int</span> <span class="nv">c</span>,<span class="nv">int</span> <span class="nv">l</span>,<span class="nv">int</span> <span class="nv">r</span>,<span class="nv">int</span> <span class="nv">rt</span><span class="ss">)</span> {
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">l</span> <span class="o">&amp;&amp;</span> <span class="nv">r</span> <span class="o">&lt;=</span> <span class="nv">R</span><span class="ss">)</span> {
+              <span class="nv">cnt</span>[<span class="nv">rt</span>] <span class="o">+=</span> <span class="nv">c</span><span class="c1">;</span>
+              <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">l</span> , <span class="nv">r</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="k">return</span> <span class="c1">;</span>
        }
-       return -1;
+       <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">l</span> <span class="o">+</span> <span class="nv">r</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">L</span> <span class="o">&lt;=</span> <span class="nv">m</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">lson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="k">if</span> <span class="ss">(</span><span class="nv">m</span> <span class="o">&lt;</span> <span class="nv">R</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">L</span> , <span class="nv">R</span> , <span class="nv">c</span> , <span class="nv">rson</span><span class="ss">)</span><span class="c1">;</span>
+       <span class="nv">PushUP</span><span class="ss">(</span><span class="nv">rt</span> , <span class="nv">l</span> , <span class="nv">r</span><span class="ss">)</span><span class="c1">;</span>
 }
-int main() {
-       int n , cas = 1;
-       while (~scanf(&quot;%d&quot;,&amp;n) &amp;&amp; n) {
-              int m = 0;
-              while (n --) {
-                     double a , b , c , d;
-                     scanf(&quot;%lf%lf%lf%lf&quot;,&amp;a,&amp;b,&amp;c,&amp;d);
-                     X[m] = a;
-                     ss[m++] = Seg(a , c , b , 1);
-                     X[m] = c;
-                     ss[m++] = Seg(a , c , d , -1);
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+       <span class="nv">int</span> <span class="nv">n</span><span class="c1">;</span>
+       <span class="k">while</span> <span class="ss">(</span><span class="o">~</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span><span class="ss">))</span> {
+              <span class="nv">int</span> <span class="nv">m</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="nv">int</span> <span class="nv">lbd</span> <span class="o">=</span> <span class="mi">10000</span>, <span class="nv">rbd</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10000</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt; n ; i ++) {</span>
+                     <span class="nv">int</span> <span class="nv">a</span> , <span class="nv">b</span> , <span class="nv">c</span> , <span class="nv">d</span><span class="c1">;</span>
+                     <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d%d%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span>,<span class="o">&amp;</span><span class="nv">c</span>,<span class="o">&amp;</span><span class="nv">d</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">lbd</span> <span class="o">=</span> <span class="nv">min</span><span class="ss">(</span><span class="nv">lbd</span> , <span class="nv">a</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">rbd</span> <span class="o">=</span> <span class="nv">max</span><span class="ss">(</span><span class="nv">rbd</span> , <span class="nv">c</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">ss</span>[<span class="nv">m</span><span class="o">++</span>] <span class="o">=</span> <span class="nv">Seg</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">c</span> , <span class="nv">b</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">ss</span>[<span class="nv">m</span><span class="o">++</span>] <span class="o">=</span> <span class="nv">Seg</span><span class="ss">(</span><span class="nv">a</span> , <span class="nv">c</span> , <span class="nv">d</span> , <span class="o">-</span><span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
               }
-              sort(X , X + m);
-              sort(ss , ss + m);
-              int k = 1;
-              for (int i = 1 ; i &lt; m ; i ++) {
-                     if (X[i] != X[i-1]) X[k++] = X[i];
+              <span class="nv">sort</span><span class="ss">(</span><span class="nv">ss</span> , <span class="nv">ss</span> <span class="o">+</span> <span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+              <span class="nv">int</span> <span class="nv">ret</span> <span class="o">=</span> <span class="mi">0</span> , <span class="nv">last</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+              <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; i &lt; m ; i ++) {</span>
+                     <span class="k">if</span> <span class="ss">(</span><span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">l</span> <span class="o">&lt;</span> <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">r</span><span class="ss">)</span> <span class="nv">update</span><span class="ss">(</span><span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">l</span> , <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">r</span> <span class="o">-</span> <span class="mi">1</span> , <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">s</span> , <span class="nv">lbd</span> , <span class="nv">rbd</span> <span class="o">-</span> <span class="mi">1</span> , <span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">numseg</span>[<span class="mi">1</span>] <span class="o">*</span> <span class="ss">(</span><span class="nv">ss</span>[<span class="nv">i</span><span class="o">+</span><span class="mi">1</span>].<span class="nv">h</span> <span class="o">-</span> <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">h</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">ret</span> <span class="o">+=</span> <span class="nv">abs</span><span class="ss">(</span><span class="nv">len</span>[<span class="mi">1</span>] <span class="o">-</span> <span class="nv">last</span><span class="ss">)</span><span class="c1">;</span>
+                     <span class="nv">last</span> <span class="o">=</span> <span class="nv">len</span>[<span class="mi">1</span>]<span class="c1">;</span>
               }
-              memset(cnt , 0 , sizeof(cnt));
-              memset(sum , 0 , sizeof(sum));
-              double ret = 0;
-              for (int i = 0 ; i &lt; m - 1 ; i ++) {
-                     int l = Bin(ss[i].l , k , X);
-                     int r = Bin(ss[i].r , k , X) - 1;
-                     if (l &lt;= r) update(l , r , ss[i].s , 0 , k - 1, 1);
-                     ret += sum[1] * (ss[i+1].h - ss[i].h);
-              }
-              printf(&quot;Test case #%d\nTotal explored area: %.2lf\n\n&quot;,cas++ , ret);
+              <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">ret</span><span class="ss">)</span><span class="c1">;</span>
        }
-       return 0;
+       <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
-
-<p>线段树操作:update:区间增减 query:直接取根节点的值</p>
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;cstring&gt;
-#include &lt;cctype&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-#define lson l , m , rt &lt;&lt; 1
-#define rson m + 1 , r , rt &lt;&lt; 1 | 1
-
-const int maxn = 22222;
-struct Seg{
-       int l , r , h , s;
-       Seg() {}
-       Seg(int a,int b,int c,int d):l(a) , r(b) , h(c) , s(d) {}
-       bool operator &lt; (const Seg &amp;cmp) const {
-              return h &lt; cmp.h;
-       }
-}ss[maxn];
-bool lbd[maxn&lt;&lt;2] , rbd[maxn&lt;&lt;2];
-int numseg[maxn&lt;&lt;2];
-int cnt[maxn&lt;&lt;2];
-int len[maxn&lt;&lt;2];
-void PushUP(int rt,int l,int r) {
-       if (cnt[rt]) {
-              lbd[rt] = rbd[rt] = 1;
-              len[rt] = r - l + 1;
-              numseg[rt] = 2;
-       } else if (l == r) {
-              len[rt] = numseg[rt] = lbd[rt] = rbd[rt] = 0;
-       } else {
-              lbd[rt] = lbd[rt&lt;&lt;1];
-              rbd[rt] = rbd[rt&lt;&lt;1|1];
-              len[rt] = len[rt&lt;&lt;1] + len[rt&lt;&lt;1|1];
-              numseg[rt] = numseg[rt&lt;&lt;1] + numseg[rt&lt;&lt;1|1];
-              if (lbd[rt&lt;&lt;1|1] &amp;&amp; rbd[rt&lt;&lt;1]) numseg[rt] -= 2;//两条线重合
-       }
-}
-void update(int L,int R,int c,int l,int r,int rt) {
-       if (L &lt;= l &amp;&amp; r &lt;= R) {
-              cnt[rt] += c;
-              PushUP(rt , l , r);
-              return ;
-       }
-       int m = (l + r) &gt;&gt; 1;
-       if (L &lt;= m) update(L , R , c , lson);
-       if (m &lt; R) update(L , R , c , rson);
-       PushUP(rt , l , r);
-}
-int main() {
-       int n;
-       while (~scanf(&quot;%d&quot;,&amp;n)) {
-              int m = 0;
-              int lbd = 10000, rbd = -10000;
-              for (int i = 0 ; i &lt; n ; i ++) {
-                     int a , b , c , d;
-                     scanf(&quot;%d%d%d%d&quot;,&amp;a,&amp;b,&amp;c,&amp;d);
-                     lbd = min(lbd , a);
-                     rbd = max(rbd , c);
-                     ss[m++] = Seg(a , c , b , 1);
-                     ss[m++] = Seg(a , c , d , -1);
-              }
-              sort(ss , ss + m);
-              int ret = 0 , last = 0;
-              for (int i = 0 ; i &lt; m ; i ++) {
-                     if (ss[i].l &lt; ss[i].r) update(ss[i].l , ss[i].r - 1 , ss[i].s , lbd , rbd - 1 , 1);
-                     ret += numseg[1] * (ss[i+1].h - ss[i].h);
-                     ret += abs(len[1] - last);
-                     last = len[1];
-              }
-              printf(&quot;%d\n&quot;,ret);
-       }
-       return 0;
-}
-</code></pre>
+</pre></div>
+</td></tr></table></p>
                 
                   
                 

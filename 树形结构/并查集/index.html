@@ -844,53 +844,99 @@
                 
                   <h1>并查集</h1>
                 
-                <pre><code>#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
-#include&lt;cstring&gt;
-#include&lt;cmath&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-int pre[1010]; //里面全是掌门
+                <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span><span class="o">&lt;</span><span class="nv">iostream</span><span class="o">&gt;</span>
+#<span class="k">include</span><span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span><span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span><span class="o">&lt;</span><span class="nv">cmath</span><span class="o">&gt;</span>
+#<span class="k">include</span><span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">pre</span>[<span class="mi">1010</span>]<span class="c1">; //里面全是掌门</span>
 
-int unionsearch(int root)
+<span class="nv">int</span> <span class="nv">unionsearch</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">root</span><span class="ss">)</span>
 {
-    int son, tmp;
-    son = root;
-    while(root != pre[root]) //寻找掌门ing……
-        root = pre[root];
-    while(son != root) //路径压缩
+    <span class="nv">int</span> <span class="nv">son</span>, <span class="nv">tmp</span><span class="c1">;</span>
+    <span class="nv">son</span> <span class="o">=</span> <span class="nv">root</span><span class="c1">;</span>
+    <span class="k">while</span><span class="ss">(</span><span class="nv">root</span> <span class="o">!=</span> <span class="nv">pre</span>[<span class="nv">root</span>]<span class="ss">)</span> <span class="o">//</span>寻找掌门<span class="nv">ing</span>……
+        <span class="nv">root</span> <span class="o">=</span> <span class="nv">pre</span>[<span class="nv">root</span>]<span class="c1">;</span>
+    <span class="k">while</span><span class="ss">(</span><span class="nv">son</span> <span class="o">!=</span> <span class="nv">root</span><span class="ss">)</span> <span class="o">//</span>路径压缩
     {
-        tmp = pre[son];
-        pre[son] = root;
-        son = tmp;
+        <span class="nv">tmp</span> <span class="o">=</span> <span class="nv">pre</span>[<span class="nv">son</span>]<span class="c1">;</span>
+        <span class="nv">pre</span>[<span class="nv">son</span>] <span class="o">=</span> <span class="nv">root</span><span class="c1">;</span>
+        <span class="nv">son</span> <span class="o">=</span> <span class="nv">tmp</span><span class="c1">;</span>
     }
-    return root; //掌门驾到~
+    <span class="k">return</span> <span class="nv">root</span><span class="c1">; //掌门驾到~</span>
 }
 
-int main()
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span>
 {
-    int num, road, total, i, start, end, root1, root2;
-    while(scanf(&quot;%d%d&quot;, &amp;num, &amp;road) &amp;&amp; num)
+    <span class="nv">int</span> <span class="nv">num</span>, <span class="nv">road</span>, <span class="nv">total</span>, <span class="nv">i</span>, <span class="nv">start</span>, <span class="k">end</span>, <span class="nv">root1</span>, <span class="nv">root2</span><span class="c1">;</span>
+    <span class="k">while</span><span class="ss">(</span><span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>, <span class="o">&amp;</span><span class="nv">num</span>, <span class="o">&amp;</span><span class="nv">road</span><span class="ss">)</span> <span class="o">&amp;&amp;</span> <span class="nv">num</span><span class="ss">)</span>
     {
-        total = num - 1; //共num-1个门派
-        for(i = 1; i &lt;= num; ++i) //每条路都是掌门
-            pre[i] = i;
-        while(road--)
+        <span class="nv">total</span> <span class="o">=</span> <span class="nv">num</span> <span class="o">-</span> <span class="mi">1</span><span class="c1">; //共num-1个门派</span>
+        <span class="k">for</span><span class="ss">(</span><span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">; i &lt;= num; ++i) //每条路都是掌门</span>
+            <span class="nv">pre</span>[<span class="nv">i</span>] <span class="o">=</span> <span class="nv">i</span><span class="c1">;</span>
+        <span class="k">while</span><span class="ss">(</span><span class="nv">road</span><span class="o">--</span><span class="ss">)</span>
         {
-            scanf(&quot;%d%d&quot;, &amp;start, &amp;end); //他俩要结拜
-            root1 = unionsearch(start);
-            root2 = unionsearch(end);
-            if(root1 != root2) //掌门不同？踢馆！~
+            <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d%d</span><span class="s2">&quot;</span>, <span class="o">&amp;</span><span class="nv">start</span>, <span class="o">&amp;</span><span class="k">end</span><span class="ss">)</span><span class="c1">; //他俩要结拜</span>
+            <span class="nv">root1</span> <span class="o">=</span> <span class="nv">unionsearch</span><span class="ss">(</span><span class="nv">start</span><span class="ss">)</span><span class="c1">;</span>
+            <span class="nv">root2</span> <span class="o">=</span> <span class="nv">unionsearch</span><span class="ss">(</span><span class="k">end</span><span class="ss">)</span><span class="c1">;</span>
+            <span class="k">if</span><span class="ss">(</span><span class="nv">root1</span> <span class="o">!=</span> <span class="nv">root2</span><span class="ss">)</span> <span class="o">//</span>掌门不同？踢馆！<span class="o">~</span>
             {
-                pre[root1] = root2;
-                total--; //门派少一个，敌人（要建的路）就少一个
+                <span class="nv">pre</span>[<span class="nv">root1</span>] <span class="o">=</span> <span class="nv">root2</span><span class="c1">;</span>
+                <span class="nv">total</span><span class="o">--</span><span class="c1">; //门派少一个，敌人（要建的路）就少一个</span>
             }
         }
-        printf(&quot;%d\n&quot;, total);//天下局势：还剩几个门派
+        <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>, <span class="nv">total</span><span class="ss">)</span><span class="c1">;//天下局势：还剩几个门派</span>
     }
-    return 0;
+    <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
                 
                   
                 

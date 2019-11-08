@@ -846,25 +846,43 @@
                 
                   <h1>乘法</h1>
                 
-                <pre><code class="cpp">#include&lt;bit/stdc++.h&gt;
-using namespace std;
-int main()
-{
-    string a,b;
-    int cnt[2020];
-    memset(cnt,0,sizeof(cnt));
-    cin&gt;&gt;a&gt;&gt;b;
-    for(int i=0;i&lt;a.length();i++)
-    for(int j=0;j&lt;b.length();j++)
-    cnt[i+j]+=(a[i]-'0')*(b[j]-'0');
-    for(int i=a.length()+b.length();i&gt;0;i--)
-        cnt[i-1]+=cnt[i]/10,cnt[i]%=10;
-    for(int i=0;i&lt;a.length()+b.length()-1;i++)
-        cout&lt;&lt;cnt[i];
-    cout&lt;&lt;endl;
-    return 0;
-}
-</code></pre>
+                <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;bit/stdc++.h&gt;</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">cnt</span><span class="p">[</span><span class="mi">2020</span><span class="p">];</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">cnt</span><span class="p">));</span>
+    <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">a</span><span class="o">&gt;&gt;</span><span class="n">b</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">a</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">b</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">cnt</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span><span class="o">+=</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;0&#39;</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">a</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">+</span><span class="n">b</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">)</span>
+        <span class="n">cnt</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="n">cnt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span><span class="n">cnt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">%=</span><span class="mi">10</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">a</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">+</span><span class="n">b</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">cnt</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
                 
                   
                 

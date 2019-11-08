@@ -846,35 +846,63 @@
                 
                   <h1>阶乘</h1>
                 
-                <pre><code class="cpp">#include&lt;bits/stdc++.h&gt;
-#define mod 100000000000000
-typedef long long ll;
-using namespace std;
-ll ans[10000000];
-int main()
-{
-    int N;
-    ll t,s,l=0;//l记录结果所占数组长度
-    cin&gt;&gt;N;
-    ans[0]=1;
-    for(int i=2;i&lt;=N;i++)
-    {
-        s=0;//s存储超过14位的部分
-        for(int j=0;j&lt;=l;j++)
-        {
-            t=ans[j]*i+s;
-            ans[j]=t%mod;
-            s=t/mod;
-        }
-        if(s)ans[++l]=s;
-    }
-    printf(&quot;%lld&quot;,ans[l]);//单独输出消去前缀0
-    for(int i=l-1;i&gt;=0;i--)
-        printf(&quot;%014lld&quot;,ans[i]);//之后的就要严格按14位输出
-    printf(&quot;\n&quot;);
-    return 0;
-}
-</code></pre>
+                <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
+<span class="cp">#define mod 100000000000000</span>
+<span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="n">ll</span> <span class="n">ans</span><span class="p">[</span><span class="mi">10000000</span><span class="p">];</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">N</span><span class="p">;</span>
+    <span class="n">ll</span> <span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="c1">//l记录结果所占数组长度</span>
+    <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">N</span><span class="p">;</span>
+    <span class="n">ans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">N</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="c1">//s存储超过14位的部分</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">l</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">t</span><span class="o">=</span><span class="n">ans</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="n">s</span><span class="p">;</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">t</span><span class="o">%</span><span class="n">mod</span><span class="p">;</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">t</span><span class="o">/</span><span class="n">mod</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="n">ans</span><span class="p">[</span><span class="o">++</span><span class="n">l</span><span class="p">]</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%lld&quot;</span><span class="p">,</span><span class="n">ans</span><span class="p">[</span><span class="n">l</span><span class="p">]);</span><span class="c1">//单独输出消去前缀0</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%014lld&quot;</span><span class="p">,</span><span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="c1">//之后的就要严格按14位输出</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
                 
                   
                 

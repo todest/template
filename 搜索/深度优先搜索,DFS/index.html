@@ -844,59 +844,111 @@
                 
                   <h1>深度优先搜索,DFS</h1>
                 
-                <pre><code>#include&lt;stdio.h&gt;
-int n,m,p,q,min=99999999;
-int a[51][51],book[51][51];
-void dfs(int x,int y,int step)
+                <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span><span class="o">&lt;</span><span class="nv">stdio</span>.<span class="nv">h</span><span class="o">&gt;</span>
+<span class="nv">int</span> <span class="nv">n</span>,<span class="nv">m</span>,<span class="nv">p</span>,<span class="nv">q</span>,<span class="nv">min</span><span class="o">=</span><span class="mi">99999999</span><span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">a</span>[<span class="mi">51</span>][<span class="mi">51</span>],<span class="nv">book</span>[<span class="mi">51</span>][<span class="mi">51</span>]<span class="c1">;</span>
+<span class="nv">void</span> <span class="nv">dfs</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">x</span>,<span class="nv">int</span> <span class="nv">y</span>,<span class="nv">int</span> <span class="nv">step</span><span class="ss">)</span>
 {
-    int next[4][2]={
-    {0,1},//向右走
-    {1,0},//向下走
-    {0,-1},//向左走
-    {-1,0},//向上走 
-    };
-    int tx,ty,k;
-    if(x==p &amp;&amp; y==q)  //判断是否到达小哈的位置 
+    <span class="nv">int</span> <span class="k">next</span>[<span class="mi">4</span>][<span class="mi">2</span>]<span class="o">=</span>{
+    {<span class="mi">0</span>,<span class="mi">1</span>},<span class="o">//</span>向右走
+    {<span class="mi">1</span>,<span class="mi">0</span>},<span class="o">//</span>向下走
+    {<span class="mi">0</span>,<span class="o">-</span><span class="mi">1</span>},<span class="o">//</span>向左走
+    {<span class="o">-</span><span class="mi">1</span>,<span class="mi">0</span>},<span class="o">//</span>向上走 
+    }<span class="c1">;</span>
+    <span class="nv">int</span> <span class="nv">tx</span>,<span class="nv">ty</span>,<span class="nv">k</span><span class="c1">;</span>
+    <span class="k">if</span><span class="ss">(</span><span class="nv">x</span><span class="o">==</span><span class="nv">p</span> <span class="o">&amp;&amp;</span> <span class="nv">y</span><span class="o">==</span><span class="nv">q</span><span class="ss">)</span>  <span class="o">//</span>判断是否到达小哈的位置 
     {
-        if(step&lt;min)
-            min=step;  //更新最小值
-        return; 
+        <span class="k">if</span><span class="ss">(</span><span class="nv">step</span><span class="o">&lt;</span><span class="nv">min</span><span class="ss">)</span>
+            <span class="nv">min</span><span class="o">=</span><span class="nv">step</span><span class="c1">;  //更新最小值</span>
+        <span class="k">return</span><span class="c1">; </span>
     }
-    /*枚举四种走法*/ 
-    for(k=0;k&lt;=3;k++)
+    <span class="cm">/*枚举四种走法*/</span> 
+    <span class="k">for</span><span class="ss">(</span><span class="nv">k</span><span class="o">=</span><span class="mi">0</span><span class="c1">;k&lt;=3;k++)</span>
     {
-        /*计算下一个点的坐标*/
-        tx=x+next[k][0];
-        ty=y+next[k][1];
-        if(tx&lt;1 || tx&gt;n || ty&lt;1 || ty&gt;m)  //判断是否越界
-            continue;
-        /*判断该点是否为障碍物或者已经在路径中*/
-        if(a[tx][ty]==0 &amp;&amp; book[tx][ty]==0)
+        <span class="cm">/*计算下一个点的坐标*/</span>
+        <span class="nv">tx</span><span class="o">=</span><span class="nv">x</span><span class="o">+</span><span class="k">next</span>[<span class="nv">k</span>][<span class="mi">0</span>]<span class="c1">;</span>
+        <span class="nv">ty</span><span class="o">=</span><span class="nv">y</span><span class="o">+</span><span class="k">next</span>[<span class="nv">k</span>][<span class="mi">1</span>]<span class="c1">;</span>
+        <span class="k">if</span><span class="ss">(</span><span class="nv">tx</span><span class="o">&lt;</span><span class="mi">1</span> <span class="o">||</span> <span class="nv">tx</span><span class="o">&gt;</span><span class="nv">n</span> <span class="o">||</span> <span class="nv">ty</span><span class="o">&lt;</span><span class="mi">1</span> <span class="o">||</span> <span class="nv">ty</span><span class="o">&gt;</span><span class="nv">m</span><span class="ss">)</span>  <span class="o">//</span>判断是否越界
+            <span class="k">continue</span><span class="c1">;</span>
+        <span class="cm">/*判断该点是否为障碍物或者已经在路径中*/</span>
+        <span class="k">if</span><span class="ss">(</span><span class="nv">a</span>[<span class="nv">tx</span>][<span class="nv">ty</span>]<span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nv">book</span>[<span class="nv">tx</span>][<span class="nv">ty</span>]<span class="o">==</span><span class="mi">0</span><span class="ss">)</span>
         {
-            book[tx][ty]=1;  //标记这个点已经走过
-            dfs(tx,ty,step+1);  //开始尝试下一个点
-            book[tx][ty]=0;  //尝试结束，取消这个点的标记 
+            <span class="nv">book</span>[<span class="nv">tx</span>][<span class="nv">ty</span>]<span class="o">=</span><span class="mi">1</span><span class="c1">;  //标记这个点已经走过</span>
+            <span class="nv">dfs</span><span class="ss">(</span><span class="nv">tx</span>,<span class="nv">ty</span>,<span class="nv">step</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="c1">;  //开始尝试下一个点</span>
+            <span class="nv">book</span>[<span class="nv">tx</span>][<span class="nv">ty</span>]<span class="o">=</span><span class="mi">0</span><span class="c1">;  //尝试结束，取消这个点的标记 </span>
         } 
     }
-    return;
+    <span class="k">return</span><span class="c1">;</span>
 } 
 
-int main()
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span>
 {
-    int i,j,startx,starty;
-    scanf(&quot;%d %d&quot;,&amp;n,&amp;m);  //读入n和m，n为行，m为列
-    /*读入迷宫*/
-    for(i=1;i&lt;=n;i++)
-        for(j=1;j&lt;=m;j++)
-            scanf(&quot;%d&quot;,&amp;a[i][j]);
-    scanf(&quot;%d %d %d %d&quot;,&amp;startx,&amp;starty,&amp;p,&amp;q);  //读入起点和终点坐标
-    /*从起点开始搜索*/
-    book[startx][starty]=1;  //标记起点已经在路径中，防止后面重复走
-    dfs(startx,starty,0);  //第一个参数是起点的x坐标，以此类推是起点的y坐标，初始步数为0
-    printf(&quot;%d&quot;,min);  //输出最短步数
-    return 0; 
+    <span class="nv">int</span> <span class="nv">i</span>,<span class="nv">j</span>,<span class="nv">startx</span>,<span class="nv">starty</span><span class="c1">;</span>
+    <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span>,<span class="o">&amp;</span><span class="nv">m</span><span class="ss">)</span><span class="c1">;  //读入n和m，n为行，m为列</span>
+    <span class="cm">/*读入迷宫*/</span>
+    <span class="k">for</span><span class="ss">(</span><span class="nv">i</span><span class="o">=</span><span class="mi">1</span><span class="c1">;i&lt;=n;i++)</span>
+        <span class="k">for</span><span class="ss">(</span><span class="nv">j</span><span class="o">=</span><span class="mi">1</span><span class="c1">;j&lt;=m;j++)</span>
+            <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>[<span class="nv">i</span>][<span class="nv">j</span>]<span class="ss">)</span><span class="c1">;</span>
+    <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d %d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">startx</span>,<span class="o">&amp;</span><span class="nv">starty</span>,<span class="o">&amp;</span><span class="nv">p</span>,<span class="o">&amp;</span><span class="nv">q</span><span class="ss">)</span><span class="c1">;  //读入起点和终点坐标</span>
+    <span class="cm">/*从起点开始搜索*/</span>
+    <span class="nv">book</span>[<span class="nv">startx</span>][<span class="nv">starty</span>]<span class="o">=</span><span class="mi">1</span><span class="c1">;  //标记起点已经在路径中，防止后面重复走</span>
+    <span class="nv">dfs</span><span class="ss">(</span><span class="nv">startx</span>,<span class="nv">starty</span>,<span class="mi">0</span><span class="ss">)</span><span class="c1">;  //第一个参数是起点的x坐标，以此类推是起点的y坐标，初始步数为0</span>
+    <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="s2">&quot;</span>,<span class="nv">min</span><span class="ss">)</span><span class="c1">;  //输出最短步数</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="c1">; </span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
                 
                   
                 

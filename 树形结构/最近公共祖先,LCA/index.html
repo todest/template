@@ -844,178 +844,346 @@
                 
                   <h1>最近公共祖先,LCA</h1>
                 
-                <pre><code>#include &lt;cstdio&gt;
-#include &lt;cstring&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;vector&gt;
-#include &lt;cmath&gt;
+                <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">iostream</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">vector</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cmath</span><span class="o">&gt;</span>
 
-using namespace std;
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
 
-const int maxn = 4e4+50;
-const int logtwo = 30;
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">4</span><span class="nv">e4</span><span class="o">+</span><span class="mi">50</span><span class="c1">;</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">logtwo</span> <span class="o">=</span> <span class="mi">30</span><span class="c1">;</span>
 
-struct edge{
-    int to ,w ;
-    edge(){}
-    edge(int _w,int _to){ w = _w; to = _to; }
-};
+<span class="nv">struct</span> <span class="nv">edge</span>{
+    <span class="nv">int</span> <span class="nv">to</span> ,<span class="nv">w</span> <span class="c1">;</span>
+    <span class="nv">edge</span><span class="ss">()</span>{}
+    <span class="nv">edge</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">_w</span>,<span class="nv">int</span> <span class="nv">_to</span><span class="ss">)</span>{ <span class="nv">w</span> <span class="o">=</span> <span class="nv">_w</span><span class="c1">; to = _to; }</span>
+}<span class="c1">;</span>
 
-vector&lt;edge&gt;G[maxn];
-int grand[maxn][logtwo],depth[maxn],gw[maxn][logtwo];
-int n,m,N;
+<span class="nv">vector</span><span class="o">&lt;</span><span class="nv">edge</span><span class="o">&gt;</span><span class="nv">G</span>[<span class="nv">maxn</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">grand</span>[<span class="nv">maxn</span>][<span class="nv">logtwo</span>],<span class="nv">depth</span>[<span class="nv">maxn</span>],<span class="nv">gw</span>[<span class="nv">maxn</span>][<span class="nv">logtwo</span>]<span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">n</span>,<span class="nv">m</span>,<span class="nv">N</span><span class="c1">;</span>
 
-void dfs(int x) {
-    for (int i = 1;i &lt;= N ; i ++) {
-        grand[x][i] = grand[grand[x][i-1]][i-1];
-        gw[x][i] = gw[grand[x][i-1]][i-1] + gw[x][i-1];
+<span class="nv">void</span> <span class="nv">dfs</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">x</span><span class="ss">)</span> {
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">;i &lt;= N ; i ++) {</span>
+        <span class="nv">grand</span>[<span class="nv">x</span>][<span class="nv">i</span>] <span class="o">=</span> <span class="nv">grand</span>[<span class="nv">grand</span>[<span class="nv">x</span>][<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]][<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]<span class="c1">;</span>
+        <span class="nv">gw</span>[<span class="nv">x</span>][<span class="nv">i</span>] <span class="o">=</span> <span class="nv">gw</span>[<span class="nv">grand</span>[<span class="nv">x</span>][<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]][<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>] <span class="o">+</span> <span class="nv">gw</span>[<span class="nv">x</span>][<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]<span class="c1">;</span>
     }
-    int len = G[x].size();
-    for (int i = 0;i &lt; len ; i ++ ) {
-        edge e = G[x][i];
-        if ( grand[x][0] != e.to ) {
-            depth[e.to] = depth[x] + 1 ;
-            grand[e.to][0] = x; gw[e.to][0] = e.w;
-            dfs(e.to);
+    <span class="nv">int</span> <span class="nv">len</span> <span class="o">=</span> <span class="nv">G</span>[<span class="nv">x</span>].<span class="nv">size</span><span class="ss">()</span><span class="c1">;</span>
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;i &lt; len ; i ++ ) {</span>
+        <span class="nv">edge</span> <span class="nv">e</span> <span class="o">=</span> <span class="nv">G</span>[<span class="nv">x</span>][<span class="nv">i</span>]<span class="c1">;</span>
+        <span class="k">if</span> <span class="ss">(</span> <span class="nv">grand</span>[<span class="nv">x</span>][<span class="mi">0</span>] <span class="o">!=</span> <span class="nv">e</span>.<span class="nv">to</span> <span class="ss">)</span> {
+            <span class="nv">depth</span>[<span class="nv">e</span>.<span class="nv">to</span>] <span class="o">=</span> <span class="nv">depth</span>[<span class="nv">x</span>] <span class="o">+</span> <span class="mi">1</span> <span class="c1">;</span>
+            <span class="nv">grand</span>[<span class="nv">e</span>.<span class="nv">to</span>][<span class="mi">0</span>] <span class="o">=</span> <span class="nv">x</span><span class="c1">; gw[e.to][0] = e.w;</span>
+            <span class="nv">dfs</span><span class="ss">(</span><span class="nv">e</span>.<span class="nv">to</span><span class="ss">)</span><span class="c1">;</span>
         }
     }
 }
 
-void init() {
-    N = floor( log(n + 0.0) / log(2.0) );
-    memset(depth,0,sizeof(depth));
-    memset(grand,0,sizeof(grand));
-    memset(gw,0,sizeof(gw));
-    dfs(1);
+<span class="nv">void</span> <span class="nv">init</span><span class="ss">()</span> {
+    <span class="nv">N</span> <span class="o">=</span> <span class="nv">floor</span><span class="ss">(</span> <span class="nv">log</span><span class="ss">(</span><span class="nv">n</span> <span class="o">+</span> <span class="mi">0</span>.<span class="mi">0</span><span class="ss">)</span> <span class="o">/</span> <span class="nv">log</span><span class="ss">(</span><span class="mi">2</span>.<span class="mi">0</span><span class="ss">)</span> <span class="ss">)</span><span class="c1">;</span>
+    <span class="nv">memset</span><span class="ss">(</span><span class="nv">depth</span>,<span class="mi">0</span>,<span class="nv">sizeof</span><span class="ss">(</span><span class="nv">depth</span><span class="ss">))</span><span class="c1">;</span>
+    <span class="nv">memset</span><span class="ss">(</span><span class="nv">grand</span>,<span class="mi">0</span>,<span class="nv">sizeof</span><span class="ss">(</span><span class="nv">grand</span><span class="ss">))</span><span class="c1">;</span>
+    <span class="nv">memset</span><span class="ss">(</span><span class="nv">gw</span>,<span class="mi">0</span>,<span class="nv">sizeof</span><span class="ss">(</span><span class="nv">gw</span><span class="ss">))</span><span class="c1">;</span>
+    <span class="nv">dfs</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span><span class="c1">;</span>
 }
 
-int lca(int a,int b) {
-    if ( depth[a] &gt; depth[b] ) swap(a,b);
-    int ans = 0;
-    for (int i = N;i &gt;= 0;i--) {
-        if ( depth[a] &lt; depth[b] &amp;&amp; depth[grand[b][i]] &gt;= depth[a] )
-            ans += gw[b][i] , b = grand[b][i];
+<span class="nv">int</span> <span class="nv">lca</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">a</span>,<span class="nv">int</span> <span class="nv">b</span><span class="ss">)</span> {
+    <span class="k">if</span> <span class="ss">(</span> <span class="nv">depth</span>[<span class="nv">a</span>] <span class="o">&gt;</span> <span class="nv">depth</span>[<span class="nv">b</span>] <span class="ss">)</span> <span class="nv">swap</span><span class="ss">(</span><span class="nv">a</span>,<span class="nv">b</span><span class="ss">)</span><span class="c1">;</span>
+    <span class="nv">int</span> <span class="nv">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="nv">N</span><span class="c1">;i &gt;= 0;i--) {</span>
+        <span class="k">if</span> <span class="ss">(</span> <span class="nv">depth</span>[<span class="nv">a</span>] <span class="o">&lt;</span> <span class="nv">depth</span>[<span class="nv">b</span>] <span class="o">&amp;&amp;</span> <span class="nv">depth</span>[<span class="nv">grand</span>[<span class="nv">b</span>][<span class="nv">i</span>]] <span class="o">&gt;=</span> <span class="nv">depth</span>[<span class="nv">a</span>] <span class="ss">)</span>
+            <span class="nv">ans</span> <span class="o">+=</span> <span class="nv">gw</span>[<span class="nv">b</span>][<span class="nv">i</span>] , <span class="nv">b</span> <span class="o">=</span> <span class="nv">grand</span>[<span class="nv">b</span>][<span class="nv">i</span>]<span class="c1">;</span>
     } 
-    for (int j = N; j &gt;= 0 ; j -- ) {
-        if ( grand[a][j] != grand[b][j]  ) {
-            ans += gw[a][j]; ans += gw[b][j];
-            a = grand[a][j]; b = grand[b][j];
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">j</span> <span class="o">=</span> <span class="nv">N</span><span class="c1">; j &gt;= 0 ; j -- ) {</span>
+        <span class="k">if</span> <span class="ss">(</span> <span class="nv">grand</span>[<span class="nv">a</span>][<span class="nv">j</span>] <span class="o">!=</span> <span class="nv">grand</span>[<span class="nv">b</span>][<span class="nv">j</span>]  <span class="ss">)</span> {
+            <span class="nv">ans</span> <span class="o">+=</span> <span class="nv">gw</span>[<span class="nv">a</span>][<span class="nv">j</span>]<span class="c1">; ans += gw[b][j];</span>
+            <span class="nv">a</span> <span class="o">=</span> <span class="nv">grand</span>[<span class="nv">a</span>][<span class="nv">j</span>]<span class="c1">; b = grand[b][j];</span>
         }
     }
-    if(a != b) ans += gw[a][0], ans += gw[b][0];
-    return ans;
+    <span class="k">if</span><span class="ss">(</span><span class="nv">a</span> <span class="o">!=</span> <span class="nv">b</span><span class="ss">)</span> <span class="nv">ans</span> <span class="o">+=</span> <span class="nv">gw</span>[<span class="nv">a</span>][<span class="mi">0</span>], <span class="nv">ans</span> <span class="o">+=</span> <span class="nv">gw</span>[<span class="nv">b</span>][<span class="mi">0</span>]<span class="c1">;</span>
+    <span class="k">return</span> <span class="nv">ans</span><span class="c1">;</span>
 }
 
-int main(){
-    int t; cin&gt;&gt;t;
-    while ( t -- ) {
-        scanf(&quot;%d %d&quot;,&amp;n,&amp;m);
-        for (int i = 0;i &lt;= n;i++) G[i].clear();
-        int u,v,w;
-        for ( int i = 0; i &lt; n-1 ; i ++ ) {
-            scanf(&quot;%d %d %d&quot;,&amp;u,&amp;v,&amp;w);
-            G[u].push_back(edge(w,v));
-            G[v].push_back(edge(w,u));
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span>{
+    <span class="nv">int</span> <span class="nv">t</span><span class="c1">; cin&gt;&gt;t;</span>
+    <span class="k">while</span> <span class="ss">(</span> <span class="nv">t</span> <span class="o">--</span> <span class="ss">)</span> {
+        <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span>,<span class="o">&amp;</span><span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+        <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;i &lt;= n;i++) G[i].clear();</span>
+        <span class="nv">int</span> <span class="nv">u</span>,<span class="nv">v</span>,<span class="nv">w</span><span class="c1">;</span>
+        <span class="k">for</span> <span class="ss">(</span> <span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">; i &lt; n-1 ; i ++ ) {</span>
+            <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">u</span>,<span class="o">&amp;</span><span class="nv">v</span>,<span class="o">&amp;</span><span class="nv">w</span><span class="ss">)</span><span class="c1">;</span>
+            <span class="nv">G</span>[<span class="nv">u</span>].<span class="nv">push_back</span><span class="ss">(</span><span class="nv">edge</span><span class="ss">(</span><span class="nv">w</span>,<span class="nv">v</span><span class="ss">))</span><span class="c1">;</span>
+            <span class="nv">G</span>[<span class="nv">v</span>].<span class="nv">push_back</span><span class="ss">(</span><span class="nv">edge</span><span class="ss">(</span><span class="nv">w</span>,<span class="nv">u</span><span class="ss">))</span><span class="c1">;</span>
         }
-        init();  int a ,b ;
-        for (int i = 1;i &lt;= m; i ++ ) {
-            scanf(&quot;%d %d&quot;,&amp;a,&amp;b);
-            printf(&quot;%d\n&quot;,lca(a,b));
+        <span class="nv">init</span><span class="ss">()</span><span class="c1">;  int a ,b ;</span>
+        <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">;i &lt;= m; i ++ ) {</span>
+            <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">a</span>,<span class="o">&amp;</span><span class="nv">b</span><span class="ss">)</span><span class="c1">;</span>
+            <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">lca</span><span class="ss">(</span><span class="nv">a</span>,<span class="nv">b</span><span class="ss">))</span><span class="c1">;</span>
         }
     }   
-    return 0;
+    <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstdio</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">cstring</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">iostream</span><span class="o">&gt;</span>
+#<span class="k">include</span> <span class="o">&lt;</span><span class="nv">algorithm</span><span class="o">&gt;</span>
 
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;cstring&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
+<span class="nv">using</span> <span class="nv">namespace</span> <span class="nv">std</span><span class="c1">;</span>
 
-using namespace std;
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">maxn</span> <span class="o">=</span> <span class="mi">4</span><span class="nv">e4</span> <span class="o">+</span> <span class="mi">50</span> <span class="c1">;</span>
+<span class="nv">const</span> <span class="nv">int</span> <span class="nv">logtwo</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1">;</span>
 
-const int maxn = 4e4 + 50 ;
-const int logtwo = 30 ;
+<span class="nv">struct</span> <span class="nv">edge</span> {
+    <span class="nv">int</span> <span class="nv">nxt</span> ,<span class="nv">w</span> ,<span class="nv">to</span> <span class="c1">;</span>
+}<span class="nv">ss</span>[<span class="nv">maxn</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>]<span class="c1">;</span>
 
-struct edge {
-    int nxt ,w ,to ;
-}ss[maxn &lt;&lt; 2];
+<span class="nv">int</span> <span class="nv">head</span>[<span class="nv">maxn</span>] ,<span class="nv">depth</span>[<span class="nv">maxn</span>] ,<span class="nv">father</span>[<span class="nv">maxn</span>][<span class="nv">logtwo</span>] ,<span class="nv">fw</span>[<span class="nv">maxn</span>] <span class="c1">;</span>
+<span class="nv">int</span> <span class="nv">n</span> ,<span class="nv">m</span> ,<span class="nv">cnt</span> ,<span class="nv">u</span> ,<span class="nv">v</span> ,<span class="nv">w</span> ,<span class="nv">s1</span> ,<span class="nv">s2</span> <span class="c1">;</span>
 
-int head[maxn] ,depth[maxn] ,father[maxn][logtwo] ,fw[maxn] ;
-int n ,m ,cnt ,u ,v ,w ,s1 ,s2 ;
-
-void init() {
-    cnt = 0;
-    memset(depth ,0 ,sizeof(depth)) ;
-    memset(fw ,0 ,sizeof(fw)) ;
-    memset(father ,0 ,sizeof(father)) ;
-    memset(head ,-1 ,sizeof(head)) ;
+<span class="nv">void</span> <span class="nv">init</span><span class="ss">()</span> {
+    <span class="nv">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
+    <span class="nv">memset</span><span class="ss">(</span><span class="nv">depth</span> ,<span class="mi">0</span> ,<span class="nv">sizeof</span><span class="ss">(</span><span class="nv">depth</span><span class="ss">))</span> <span class="c1">;</span>
+    <span class="nv">memset</span><span class="ss">(</span><span class="nv">fw</span> ,<span class="mi">0</span> ,<span class="nv">sizeof</span><span class="ss">(</span><span class="nv">fw</span><span class="ss">))</span> <span class="c1">;</span>
+    <span class="nv">memset</span><span class="ss">(</span><span class="nv">father</span> ,<span class="mi">0</span> ,<span class="nv">sizeof</span><span class="ss">(</span><span class="nv">father</span><span class="ss">))</span> <span class="c1">;</span>
+    <span class="nv">memset</span><span class="ss">(</span><span class="nv">head</span> ,<span class="o">-</span><span class="mi">1</span> ,<span class="nv">sizeof</span><span class="ss">(</span><span class="nv">head</span><span class="ss">))</span> <span class="c1">;</span>
 }
 
-void _add(int u,int v,int w) {
-    ss[++cnt].w = w;
-    ss[cnt].to = v;
-    ss[cnt].nxt = head[u];
-    head[u] = cnt ;
+<span class="nv">void</span> <span class="nv">_add</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">u</span>,<span class="nv">int</span> <span class="nv">v</span>,<span class="nv">int</span> <span class="nv">w</span><span class="ss">)</span> {
+    <span class="nv">ss</span>[<span class="o">++</span><span class="nv">cnt</span>].<span class="nv">w</span> <span class="o">=</span> <span class="nv">w</span><span class="c1">;</span>
+    <span class="nv">ss</span>[<span class="nv">cnt</span>].<span class="nv">to</span> <span class="o">=</span> <span class="nv">v</span><span class="c1">;</span>
+    <span class="nv">ss</span>[<span class="nv">cnt</span>].<span class="nv">nxt</span> <span class="o">=</span> <span class="nv">head</span>[<span class="nv">u</span>]<span class="c1">;</span>
+    <span class="nv">head</span>[<span class="nv">u</span>] <span class="o">=</span> <span class="nv">cnt</span> <span class="c1">;</span>
 }
 
-void add_edge(int u,int v,int w) {
-    _add(u ,v ,w) ;
-    _add(v ,u ,w ) ;
+<span class="nv">void</span> <span class="nv">add_edge</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">u</span>,<span class="nv">int</span> <span class="nv">v</span>,<span class="nv">int</span> <span class="nv">w</span><span class="ss">)</span> {
+    <span class="nv">_add</span><span class="ss">(</span><span class="nv">u</span> ,<span class="nv">v</span> ,<span class="nv">w</span><span class="ss">)</span> <span class="c1">;</span>
+    <span class="nv">_add</span><span class="ss">(</span><span class="nv">v</span> ,<span class="nv">u</span> ,<span class="nv">w</span> <span class="ss">)</span> <span class="c1">;</span>
 }
 
-void dfs(int x) {
-    for (int i = 1 ; (1 &lt;&lt; i) &lt;= depth[x] ; i ++ ) {
-        father[x][i] = father[father[x][i-1]][i-1];
+<span class="nv">void</span> <span class="nv">dfs</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">x</span><span class="ss">)</span> {
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">; (1 &lt;&lt; i) &lt;= depth[x] ; i ++ ) {</span>
+        <span class="nv">father</span>[<span class="nv">x</span>][<span class="nv">i</span>] <span class="o">=</span> <span class="nv">father</span>[<span class="nv">father</span>[<span class="nv">x</span>][<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]][<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]<span class="c1">;</span>
     }
-    for (int i = head[x] ; ~i ; i = ss[i].nxt ) {
-        int v = ss[i].to ;
-        if ( v != father[x][0] ) {
-            father[v][0] = x;
-            depth[v] = depth[x] + 1;
-            fw[v] = fw[x] + ss[i].w ;
-            dfs(v ) ;
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="nv">head</span>[<span class="nv">x</span>] <span class="c1">; ~i ; i = ss[i].nxt ) {</span>
+        <span class="nv">int</span> <span class="nv">v</span> <span class="o">=</span> <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">to</span> <span class="c1">;</span>
+        <span class="k">if</span> <span class="ss">(</span> <span class="nv">v</span> <span class="o">!=</span> <span class="nv">father</span>[<span class="nv">x</span>][<span class="mi">0</span>] <span class="ss">)</span> {
+            <span class="nv">father</span>[<span class="nv">v</span>][<span class="mi">0</span>] <span class="o">=</span> <span class="nv">x</span><span class="c1">;</span>
+            <span class="nv">depth</span>[<span class="nv">v</span>] <span class="o">=</span> <span class="nv">depth</span>[<span class="nv">x</span>] <span class="o">+</span> <span class="mi">1</span><span class="c1">;</span>
+            <span class="nv">fw</span>[<span class="nv">v</span>] <span class="o">=</span> <span class="nv">fw</span>[<span class="nv">x</span>] <span class="o">+</span> <span class="nv">ss</span>[<span class="nv">i</span>].<span class="nv">w</span> <span class="c1">;</span>
+            <span class="nv">dfs</span><span class="ss">(</span><span class="nv">v</span> <span class="ss">)</span> <span class="c1">;</span>
         }
     }
 }
 
-int lca(int a,int b) {
-    if ( depth[a] &gt; depth[b] ) swap(a ,b ) ;
-    int dis = depth[b] - depth[a] ;
-    for (int i = 0 ; (1&lt;&lt;i) &lt;= dis ; i ++ ) {
-        if ( dis &amp; ( 1 &lt;&lt; i) ) {
-            b = father[b][i];
+<span class="nv">int</span> <span class="nv">lca</span><span class="ss">(</span><span class="nv">int</span> <span class="nv">a</span>,<span class="nv">int</span> <span class="nv">b</span><span class="ss">)</span> {
+    <span class="k">if</span> <span class="ss">(</span> <span class="nv">depth</span>[<span class="nv">a</span>] <span class="o">&gt;</span> <span class="nv">depth</span>[<span class="nv">b</span>] <span class="ss">)</span> <span class="nv">swap</span><span class="ss">(</span><span class="nv">a</span> ,<span class="nv">b</span> <span class="ss">)</span> <span class="c1">;</span>
+    <span class="nv">int</span> <span class="nv">dis</span> <span class="o">=</span> <span class="nv">depth</span>[<span class="nv">b</span>] <span class="o">-</span> <span class="nv">depth</span>[<span class="nv">a</span>] <span class="c1">;</span>
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">; (1&lt;&lt;i) &lt;= dis ; i ++ ) {</span>
+        <span class="k">if</span> <span class="ss">(</span> <span class="nv">dis</span> <span class="o">&amp;</span> <span class="ss">(</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nv">i</span><span class="ss">)</span> <span class="ss">)</span> {
+            <span class="nv">b</span> <span class="o">=</span> <span class="nv">father</span>[<span class="nv">b</span>][<span class="nv">i</span>]<span class="c1">;</span>
         }
     }
-    if ( a == b ) return a;
-    for (int i = 29 ; i &gt;= 0 ; i -- ) {
-        if ( father[a][i] != father[b][i] ) {
-            a = father[a][i];
-            b = father[b][i];
+    <span class="k">if</span> <span class="ss">(</span> <span class="nv">a</span> <span class="o">==</span> <span class="nv">b</span> <span class="ss">)</span> <span class="k">return</span> <span class="nv">a</span><span class="c1">;</span>
+    <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">29</span> <span class="c1">; i &gt;= 0 ; i -- ) {</span>
+        <span class="k">if</span> <span class="ss">(</span> <span class="nv">father</span>[<span class="nv">a</span>][<span class="nv">i</span>] <span class="o">!=</span> <span class="nv">father</span>[<span class="nv">b</span>][<span class="nv">i</span>] <span class="ss">)</span> {
+            <span class="nv">a</span> <span class="o">=</span> <span class="nv">father</span>[<span class="nv">a</span>][<span class="nv">i</span>]<span class="c1">;</span>
+            <span class="nv">b</span> <span class="o">=</span> <span class="nv">father</span>[<span class="nv">b</span>][<span class="nv">i</span>]<span class="c1">;</span>
         }
     }
-    return father[a][0];
+    <span class="k">return</span> <span class="nv">father</span>[<span class="nv">a</span>][<span class="mi">0</span>]<span class="c1">;</span>
 }
 
-int main() {
-    int t; cin &gt;&gt; t ;
-    while( t -- ) {
-        init() ;
-        scanf(&quot;%d %d&quot;,&amp;n,&amp;m);
-        for (int i = 1 ; i &lt; n  ; i ++ ) {
-            scanf(&quot;%d %d %d&quot;,&amp;u ,&amp;v ,&amp;w ) ;
-            add_edge(u ,v ,w );
+<span class="nv">int</span> <span class="nv">main</span><span class="ss">()</span> {
+    <span class="nv">int</span> <span class="nv">t</span><span class="c1">; cin &gt;&gt; t ;</span>
+    <span class="k">while</span><span class="ss">(</span> <span class="nv">t</span> <span class="o">--</span> <span class="ss">)</span> {
+        <span class="nv">init</span><span class="ss">()</span> <span class="c1">;</span>
+        <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">n</span>,<span class="o">&amp;</span><span class="nv">m</span><span class="ss">)</span><span class="c1">;</span>
+        <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">; i &lt; n  ; i ++ ) {</span>
+            <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">u</span> ,<span class="o">&amp;</span><span class="nv">v</span> ,<span class="o">&amp;</span><span class="nv">w</span> <span class="ss">)</span> <span class="c1">;</span>
+            <span class="nv">add_edge</span><span class="ss">(</span><span class="nv">u</span> ,<span class="nv">v</span> ,<span class="nv">w</span> <span class="ss">)</span><span class="c1">;</span>
         }
-        dfs(1) ;
-        for (int i = 1 ; i &lt;= m ; i ++ ) {
-            scanf(&quot;%d %d&quot;,&amp;s1 ,&amp;s2 ) ;
-            printf(&quot;%d\n&quot;,fw[s1] + fw[s2] - 2 * fw[lca(s1 ,s2 )] );
+        <span class="nv">dfs</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span> <span class="c1">;</span>
+        <span class="k">for</span> <span class="ss">(</span><span class="nv">int</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">; i &lt;= m ; i ++ ) {</span>
+            <span class="nv">scanf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d %d</span><span class="s2">&quot;</span>,<span class="o">&amp;</span><span class="nv">s1</span> ,<span class="o">&amp;</span><span class="nv">s2</span> <span class="ss">)</span> <span class="c1">;</span>
+            <span class="nv">printf</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">%d</span><span class="se">\n</span><span class="s2">&quot;</span>,<span class="nv">fw</span>[<span class="nv">s1</span>] <span class="o">+</span> <span class="nv">fw</span>[<span class="nv">s2</span>] <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="nv">fw</span>[<span class="nv">lca</span><span class="ss">(</span><span class="nv">s1</span> ,<span class="nv">s2</span> <span class="ss">)</span>] <span class="ss">)</span><span class="c1">;</span>
         } 
     }
-    return 0;
+    <span class="k">return</span> <span class="mi">0</span><span class="c1">;</span>
 }
-</code></pre>
+</pre></div>
+</td></tr></table></p>
                 
                   
                 
