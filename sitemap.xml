@@ -1,128 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://blog.todest.cn/template/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <loc>https://blog.todest.cn/template/About/</loc>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/基础算法/递推/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/排序/快速排序/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/排序/归并排序/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/数论,数学/最大公约数,GCD/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/数论,数学/扩展欧几里得/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/数论,数学/逆元/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/数论,数学/同余,中国剩余定理/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/搜索/深度优先搜索,DFS/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/搜索/广度优先搜索,BFS/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/图论/生成树/Dijkstra/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/图论/生成树/Kruskal/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/图论/生成树/Prim/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/字符串/KMP/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/动态规划/动态规划初步/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/动态规划/背包九讲/01背包/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/树形结构/树的直径/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/树形结构/最近公共祖先,LCA/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/树形结构/并查集/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/树形结构/线段树/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/其他技巧/博弈论/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/其他技巧/高精度/乘法/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/其他技巧/高精度/阶乘/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://blog.todest.cn/template/其他技巧/pb_ds/平衡树/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://blog.todest.cn/template/about/</loc>
-     <lastmod>2019-11-09</lastmod>
+     <loc>https://blog.todest.cn/template/About/about/</loc>
+     <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
