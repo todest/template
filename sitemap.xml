@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://blog.todest.cn/template/About/</loc>
+     <loc>https://blog.todest.cn/template/</loc>
      <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -121,7 +121,7 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://blog.todest.cn/template/About/about/</loc>
+     <loc>https://blog.todest.cn/template/about/</loc>
      <lastmod>2019-11-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
